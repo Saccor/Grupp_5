@@ -14,7 +14,8 @@ const productSchema = new mongoose.Schema({
   price: Number,
   description: String,
   inStock: Boolean
-});
+}); 
+
 
 const Product = mongoose.model('Product', productSchema);
 
@@ -33,5 +34,6 @@ const createSampleProducts = async () => {
     console.error('Error creating sample products:', error);
   }
 };
+
 
 createSampleProducts();
