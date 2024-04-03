@@ -65,3 +65,11 @@ footer {
 .product:last-child {
   margin-bottom: 0;
 }
+
+.search-bar {
+  width: 200px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
