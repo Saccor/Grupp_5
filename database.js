@@ -4,7 +4,7 @@ const { ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://saccorezais:grupp5@webbshop.u8a1wvg.mongodb.net/?retryWrites=true&w=majority&appName=webbshop";
 
 mongoose.connect(uri, {
-  dbName: 'test1',
+  dbName: 'test2',
   serverApi: ServerApiVersion.v1
 }).then(() => console.log('Successfully connected to MongoDB using Mongoose!'))
   .catch(err => console.error('Connection error', err));
@@ -20,10 +20,10 @@ const Product = mongoose.model('Product', productSchema);
 
 const createSampleProducts = async () => {
   const products = [
-    { name: 'Apple', price: 8.99, description: 'Fresh and juicy red apples. Perfect for a healthy snack.', inStock: true },
-    { name: 'Loaf of Bread', price: 22.49, description: 'Whole grain bread, freshly baked every morning.', inStock: true },
-    { name: 'Cheddar Cheese', price: 44.99, description: 'Aged cheddar cheese, sharp and flavorful. Great for sandwiches.', inStock: true },
-    { name: 'Spinach', price: 17.99, description: 'Organic baby spinach leaves. Washed and ready to eat.', inStock: true }
+    { name: 'Apple', price: 8.99, description: 'Fresh and juicy red apples. Perfect for a healthy snack.'},
+    { name: 'Loaf of Bread', price: 22.49, description: 'Whole grain bread, freshly baked every morning.'},
+    { name: 'Cheddar Cheese', price: 44.99, description: 'Aged cheddar cheese, sharp and flavorful. Great for sandwiches.' },
+    { name: 'Spinach', price: 17.99, description: 'Organic baby spinach leaves. Washed and ready to eat.' }
   ];
 
   try {
