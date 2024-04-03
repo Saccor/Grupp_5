@@ -1,13 +1,37 @@
 const products = [
   {
     id: 1,
-    name: "Produkt 1",
+    name: "Banan",
     price: 10.99,
     description: "Beskrivning av produkt 1",
   },
   {
     id: 2,
-    name: "Produck 2",
+    name: "Apelsin",
+    price: 15.99,
+    description: "Beskrivning av produkt 2",
+  },
+  {
+    id: 3,
+    name: "Potatis",
+    price: 10.99,
+    description: "Beskrivning av produkt 1",
+  },
+  {
+    id: 4,
+    name: "Kiwi",
+    price: 15.99,
+    description: "Beskrivning av produkt 2",
+  },
+  {
+    id: 5,
+    name: "Päron",
+    price: 10.99,
+    description: "Beskrivning av produkt 1",
+  },
+  {
+    id: 6,
+    name: "Tomat",
     price: 15.99,
     description: "Beskrivning av produkt 2",
   },
