@@ -1,4 +1,3 @@
-// Use ES6 import statements
 import mongoose from 'mongoose';
 import { ServerApiVersion } from 'mongodb';
 import dotenv from 'dotenv';
