@@ -3,6 +3,8 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
+import routes from './app2.js';
+
 
 // Load environment variables from .env file
 dotenv.config({ path: './info.env' });
@@ -13,6 +15,8 @@ const PORT = process.env.PORT || 8080;
 
 // Construct __dirname equivalent in ES module scope
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+app.use('/api', routes);
+
 
 // Serve the static files from the 'frontend/build' directory
 app.use(express.static(path.join(__dirname, 'frontend', 'build')));
@@ -26,3 +30,4 @@ app.get('*', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+
