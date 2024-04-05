@@ -31,4 +31,3 @@ app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
 
-const express = require('express'); const https = require('https'); const http = require('http'); const os = require('os'); const fs = require('fs');
