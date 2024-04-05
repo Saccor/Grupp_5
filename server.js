@@ -3,7 +3,7 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
-import routes from './app2.js';
+import routes from './backend/app2.js';
 
 
 // Load environment variables from .env file
