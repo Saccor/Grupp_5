@@ -9,10 +9,7 @@ import { dataApiUrl, sessionSecret, port } from './config.js'; // Ensure these a
 const app = express();
 
 // Connect to MongoDB
-mongoose.connect(dataApiUrl, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
+mongoose.connect(dataApiUrl)
 .then(() => console.log('Connected to MongoDB'))
 .catch(err => console.error('Could not connect to MongoDB:', err));
 
