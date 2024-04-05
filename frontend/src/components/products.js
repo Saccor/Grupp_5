@@ -35,7 +35,7 @@ const products = [
       price: 15.99,
       description: "The heart of Mediterranean cuisine, ripe and luscious."
     },
-    // Adding 10 more products with descriptions
+    
     {
       id: 7,
       name: "Strawberry",

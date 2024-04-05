@@ -7,11 +7,11 @@ const Searchbar = ({ products, setFilteredProducts }) => {
     const searchTerm = event.target.value.toLowerCase();
     setSearchTerm(searchTerm);
     
-    // Her bir ürün için tüm değerleri bir dize olarak birleştirip arama terimi ile karşılaştırma yapılıyor
+    // Concatenates all values for each product into a string and compares it with the search term
     const filtered = products.filter((product) => {
-      // Ürünün tüm değerlerini tek bir dizeye çevirme
+      // Convert all values of the product to a single string
       const productValues = Object.values(product).join(" ").toLowerCase();
-      // Bu dizenin arama terimi içerip içermediğini kontrol etme
+      // Checking if this string contains the search term
       return productValues.includes(searchTerm);
     });
 
