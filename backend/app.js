@@ -3,21 +3,22 @@ import express from 'express';
 import session from 'express-session';
 import connectMongo from 'connect-mongo';
 import mongoose from 'mongoose';
-import { dataApiUrl, sessionSecret, port } from './config.js'; // Ensure these are correctly defined in config.js
+// Updated import to reflect changes in config.js
+import { MONGO_URI, SESSION_SECRET, PORT } from '../config.js';
 
 // Initialize Express app
 const app = express();
 
-// Connect to MongoDB
-mongoose.connect(dataApiUrl)
+// Connect to MongoDB using the updated variable name
+mongoose.connect(MONGO_URI)
 .then(() => console.log('Connected to MongoDB'))
 .catch(err => console.error('Could not connect to MongoDB:', err));
 
-// Initialize session storage with connect-mongo
-const MongoStore = connectMongo.create({ mongoUrl: dataApiUrl });
+// Initialize session storage with connect-mongo, using the updated variable name
+const MongoStore = connectMongo.create({ mongoUrl: MONGO_URI });
 
 app.use(session({
-  secret: sessionSecret,
+  secret: SESSION_SECRET, // Updated variable name
   resave: false,
   saveUninitialized: true,
   store: MongoStore
@@ -31,9 +32,9 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-// Listening on the defined port
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+// Listening on the defined port, using the updated variable name
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
 
 export default app;
