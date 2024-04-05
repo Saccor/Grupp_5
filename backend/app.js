@@ -23,7 +23,7 @@ mongoose.connect(dataApiUrl, {
 }).then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('Could not connect to MongoDB:', err));
 
-const MongoStore = connectMongo(session);
+const MongoStore = new connectMongo(session);
 
 // Session middleware setup using modern JavaScript features
 app.use(session({
