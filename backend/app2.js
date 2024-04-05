@@ -39,7 +39,7 @@ app.get('/', (req, res) => {
 });
 
 // Example route using Axios and MongoDB Data API with async/await syntax
-app.get('/api/data-api/items', async (req, res) => {
+app.get('/data-api/items', async (req, res) => {
   try {
     const response = await axios.post(`${dataApiUrl}/action/find`, {
       collection: 'test4', // Replace with your actual collection name
