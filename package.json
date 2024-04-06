@@ -2,5 +2,8 @@
   "dependencies": {
     "mongodb": "^6.5.0",
     "mongoose": "^8.2.4"
+  },
+  "scripts": {
+    "start-frontend": "npm start --prefix frontend"
   }
 }
