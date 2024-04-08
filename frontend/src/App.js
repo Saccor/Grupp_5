@@ -1,7 +1,7 @@
 // App.js
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home"; // Ensure this path is correct
+import Home from "./pages/Home.jsx"; // Ensure this path is correct
 
 function App() {
   return (
