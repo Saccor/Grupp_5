@@ -6,8 +6,9 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 
-// Configuring dotenv to load environment variables from '.env'
-dotenv.config({ path: '../.env' });
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+// Configuring dotenv to dynamically load environment variables from '.env'
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 // Ensuring the environment variables are correctly set
 const MONGO_URI = process.env.MONGO_DATA_API_URL;
@@ -43,10 +44,8 @@ app.use(session({
 // app.use('/api/products', productsRouter);
 
 // Serve static files from the React frontend app
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const frontendPath = path.join(__dirname, '..', 'frontend', 'build');
 app.use(express.static(frontendPath));
-
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(frontendPath, 'index.html'));
