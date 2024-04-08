@@ -47,7 +47,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const frontendPath = path.join(__dirname, '..', 'frontend', 'build');
 app.use(express.static(frontendPath));
 
-// Anything that doesn't match the above, send back index.html
+
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(frontendPath, 'index.html'));
 });
