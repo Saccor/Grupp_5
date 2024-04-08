@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { MONGO_URI } from '../config.js';
+import { MONGO_URI } from './config.js';
 
 // Assuming you have models like 'Product' to export
 const productSchema = new mongoose.Schema({
