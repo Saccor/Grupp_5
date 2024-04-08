@@ -1,30 +1,31 @@
 import React from "react";
 import { useState } from "react";
-import productsData from "../components/products";
+import storeItems from "../data/items.json";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Searchbar from "../components/Searchbar";
+import { Col, Row } from "react-bootstrap";
+import { StoreItem } from "../components/StoreItem";
 
 const Home = () => {
-
-  const [products, setProducts] = useState(productsData);
-  const [filteredProducts, setFilteredProducts] = useState(productsData);
+  const [filteredProducts, setFilteredProducts] = useState(storeItems);
 
   return (
     <div>
       <Header />
       <div className="content">
-        <Searchbar products={products} setFilteredProducts={setFilteredProducts} />
+        <Searchbar
+          items={storeItems}
+          setFilteredProducts={setFilteredProducts}
+        />
         <h1>Produkter</h1>
-        <ul className="products">
+        <Row md={2} xs={1} lg={3} className="g-3">
           {filteredProducts.map((product) => (
-            <li key={product.id} className="product">
-              <h3>{product.name}</h3>
-              <p>Pris: ${product.price}</p>
-              <p>Beskrivning: {product.description}</p>
-            </li>
+            <Col key={product.id}>
+              <StoreItem {...product} />
+            </Col>
           ))}
-        </ul>
+        </Row>
       </div>
       <Footer />
     </div>
