@@ -1,40 +1,53 @@
-// Import necessary modules
 import express from 'express';
 import session from 'express-session';
 import connectMongo from 'connect-mongo';
 import mongoose from 'mongoose';
-// Updated import to reflect changes in config.js
-import { MONGO_URI, SESSION_SECRET, PORT } from '../config.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
 
-// Initialize Express app
+// Configuring dotenv to load environment variables
+dotenv.config({ path: './info.env' });
+
+// Correcting the environment variable names according to your .env file
+const MONGO_URI = process.env.MONGO_DATA_API_URL;
+const SESSION_SECRET = process.env.SESSION_SECRET;
+const PORT = process.env.PORT || 3000;
+
 const app = express();
 
-// Connect to MongoDB using the updated variable name
+// Establishing connection to MongoDB
 mongoose.connect(MONGO_URI)
-.then(() => console.log('Connected to MongoDB'))
-.catch(err => console.error('Could not connect to MongoDB:', err));
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(err => console.error('Could not connect to MongoDB:', err));
 
-// Initialize session storage with connect-mongo, using the updated variable name
+// Initializing session storage with connect-mongo
 const MongoStore = connectMongo.create({ mongoUrl: MONGO_URI });
-
 app.use(session({
-  secret: SESSION_SECRET, // Updated variable name
+  secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
   store: MongoStore
 }));
 
-// Middleware to parse JSON bodies
+// Middleware for parsing JSON bodies
 app.use(express.json());
 
-// Define your route handlers
+// Define your route handlers (example)
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-// Listening on the defined port, using the updated variable name
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+// Serve static files from the 'frontend/build' directory
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+app.use(express.static(path.join(__dirname, 'frontend', 'build')));
+
+// Handling all other requests by serving the main index.html file
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend', 'build', 'index.html'));
 });
 
-export default app;
+// Starting the server
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
