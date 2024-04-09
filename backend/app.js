@@ -1,56 +1,34 @@
 import express from 'express';
-import session from 'express-session';
-import connectMongo from 'connect-mongo';
 import mongoose from 'mongoose';
-import path from 'path';
-import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import productRoutes from './routes/product.route.js';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-// Configuring dotenv to dynamically load environment variables from '.env'
-dotenv.config({ path: path.resolve(__dirname, '../.env') });
-
-// Ensuring the environment variables are correctly set
-const MONGO_URI = process.env.MONGO_DATA_API_URL;
-const SESSION_SECRET = process.env.SESSION_SECRET;
-const PORT = process.env.PORT || 3000;
-
-if (!MONGO_URI || !SESSION_SECRET) {
-  console.error('Ensure MONGO_DATA_API_URL and SESSION_SECRET are set in .env');
-  process.exit(1); // Exits the app if the environment variables are not set
-}
+dotenv.config();
 
 const app = express();
+
+// Connect to MongoDB
+const MONGO_URI = process.env.MONGO_DATA_API_URL;
+const SESSION_SECRET = process.env.SESSION_SECRET;
 
 mongoose.connect(MONGO_URI)
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('Could not connect to MongoDB:', err));
 
-  app.use(express.json());
+// Middleware
+app.use(express.json());
+app.use(session({
+  secret: SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+  store: connectMongo.create({
+    mongoUrl: MONGO_URI
+  })
+}));
 
+app.use('/api', productRoutes);
 
-  app.use(session({
-    secret: SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    store: connectMongo.create({
-      mongoUrl: MONGO_URI
-    })
-  }));
-
-
-  app.use('/api', productRoutes);
-
-// Serve static files from the React frontend app
-const frontendPath = path.join(__dirname, '..', 'frontend', 'build');
-app.use(express.static(frontendPath));
-
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(frontendPath, 'index.html'));
-});
-
-// Starting the server
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
