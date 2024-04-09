@@ -1,34 +1,26 @@
-import express from 'express';
+import cors from 'cors';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import app from '../mongoose_server/server.js';
 import productRoutes from './routes/product.route.js';
 
 dotenv.config();
 
-const app = express();
-
 // Connect to MongoDB
-const MONGO_URI = process.env.MONGO_DATA_API_URL;
-const SESSION_SECRET = process.env.SESSION_SECRET;
+const uri = process.env.MONGODB_URI;
 
-mongoose.connect(MONGO_URI)
+console.log('MongoDB URI:', uri);
+
+
+mongoose.connect(uri)
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('Could not connect to MongoDB:', err));
 
-// Middleware
-app.use(express.json());
-app.use(session({
-  secret: SESSION_SECRET,
-  resave: false,
-  saveUninitialized: true,
-  store: connectMongo.create({
-    mongoUrl: MONGO_URI
-  })
-}));
+  app.use(cors());
 
 app.use('/api', productRoutes);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

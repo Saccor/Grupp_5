@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { MONGO_URI } from '../../config.js';
 
 const productSchema = new mongoose.Schema({
   name: String,
@@ -8,6 +7,6 @@ const productSchema = new mongoose.Schema({
   inStock: Boolean,
 });
 
-const Product = mongoose.model('test4', productSchema, 'products');
+const Product = mongoose.model('mehmet_new', productSchema, 'products');
 
 export default Product;
