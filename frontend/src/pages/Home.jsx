@@ -1,21 +1,35 @@
 import React from "react";
-import { useState } from "react";
-import storeItems from "../data/items.json";
+import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Searchbar from "../components/Searchbar";
 import { Col, Row } from "react-bootstrap";
 import { StoreItem } from "../components/StoreItem";
+import axios from "axios";
 
 const Home = () => {
-  const [filteredProducts, setFilteredProducts] = useState(storeItems);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/api/products');
+      setFilteredProducts(response.data);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
+  };
 
   return (
     <div>
       <Header />
       <div className="content">
         <Searchbar
-          items={storeItems}
+          items={filteredProducts}
           setFilteredProducts={setFilteredProducts}
         />
         <h1>Produkter</h1>

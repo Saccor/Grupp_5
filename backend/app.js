@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
+import productRoutes from './routes/product.route.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // Configuring dotenv to dynamically load environment variables from '.env'
@@ -26,22 +27,20 @@ mongoose.connect(MONGO_URI)
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('Could not connect to MongoDB:', err));
 
-// Middleware for parsing JSON bodies
-app.use(express.json());
+  app.use(express.json());
 
-// Initializing session storage with connect-mongo
-app.use(session({
-  secret: SESSION_SECRET,
-  resave: false,
-  saveUninitialized: true,
-  store: connectMongo.create({
-    mongoUrl: MONGO_URI
-  })
-}));
 
-// API routes go here
-// Example:
-// app.use('/api/products', productsRouter);
+  app.use(session({
+    secret: SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    store: connectMongo.create({
+      mongoUrl: MONGO_URI
+    })
+  }));
+
+
+  app.use('/api', productRoutes);
 
 // Serve static files from the React frontend app
 const frontendPath = path.join(__dirname, '..', 'frontend', 'build');
