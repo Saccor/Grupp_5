@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
+import { Product } from './database.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // Configuring dotenv to dynamically load environment variables from '.env'
@@ -42,6 +43,17 @@ app.use(session({
 // API routes go here
 // Example:
 // app.use('/api/products', productsRouter);
+
+// API route to get products from MongoDB
+app.get('/api/products', async (req, res) => {
+  try {
+    const products = await Product.find(); // Fetch all products from your MongoDB database
+    res.json(products); // Send the products as a response
+  } catch (error) {
+    console.error('Failed to fetch products:', error);
+    res.status(500).send('Server error');
+  }
+});
 
 // Serve static files from the React frontend app
 const frontendPath = path.join(__dirname, '..', 'frontend', 'build');
