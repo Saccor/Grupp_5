@@ -1,14 +1,10 @@
 import mongoose, {model, Schema, models} from "mongoose";
 
-const ProductSchema = new Schema({
-  title: {type:String, required:true},
+const productSchema = new mongoose.Schema({
+  name: String,
+  price: Number,
   description: String,
-  price: {type: Number, required: true},
-  images: [{type:String}],
-  category: {type:mongoose.Types.ObjectId, ref:'Category'},
-  properties: {type:Object},
-}, {
-  timestamps: true,
+  inStock: Boolean,
 });
 
 export const Product = models.Product || model('Product', ProductSchema);
