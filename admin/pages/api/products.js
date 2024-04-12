@@ -1,25 +1,38 @@
-// pages/api/products.js
-import clientPromise from '../../lib/mongodb'; // Update the relative path accordingly
+import {Product} from "@/models/Product";
+import {mongooseConnect} from "@/lib/mongoose";
+import {isAdminRequest} from "@/pages/api/auth/[...nextauth]";
 
-export default async function handler(req, res) {
-  try {
-    // Get the client from the promise
-    const client = await clientPromise;
+export default async function handle(req, res) {
+  const {method} = req;
+  await mongooseConnect();
+  await isAdminRequest(req,res);
 
-    // Connect to the database
-    const db = client.db(); // If you have a specific database name, pass it as a parameter here
+  if (method === 'GET') {
+    if (req.query?.id) {
+      res.json(await Product.findOne({_id:req.query.id}));
+    } else {
+      res.json(await Product.find());
+    }
+  }
 
-    // Fetch the products from the database
-    const products = await db
-      .collection('test') // Replace 'products' with your actual collection name
-      .find({}) // Add query parameters if needed
-      .toArray(); // Convert the result to an array
+  if (method === 'POST') {
+    const {title,description,price,images,category,properties} = req.body;
+    const productDoc = await Product.create({
+      title,description,price,images,category,properties,
+    })
+    res.json(productDoc);
+  }
 
-    // Return the products in the response
-    res.status(200).json({ products });
-  } catch (e) {
-    // If an error occurs, return a 500 error and log the error to the console
-    console.error(e);
-    res.status(500).json({ error: 'Unable to fetch the products' });
+  if (method === 'PUT') {
+    const {title,description,price,images,category,properties,_id} = req.body;
+    await Product.updateOne({_id}, {title,description,price,images,category,properties});
+    res.json(true);
+  }
+
+  if (method === 'DELETE') {
+    if (req.query?.id) {
+      await Product.deleteOne({_id:req.query?.id});
+      res.json(true);
+    }
   }
 }

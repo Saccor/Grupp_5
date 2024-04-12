@@ -1,6 +1,7 @@
-// pages/api/products.js
+import {mongooseConnect} from "@/lib/mongoose";
+import {Order} from "@/models/Order";
 
-export default function handler(req, res) {
-    res.status(200).json({ message: 'This is the products API endpoint' });
-  }
-  
+export default async function handler(req,res) {
+  await mongooseConnect();
+  res.json(await Order.find().sort({createdAt:-1}));
+}
