@@ -1,17 +1,14 @@
-// CartContext.js
 import React, { createContext, useContext, useState } from "react";
+import { useLocalStorage } from "../hooks/useLocalStorage.jsx"; // Ensure the path is correct
 
-const CartContext = createContext(null); // Initialize with null for better debugging
+const CartContext = createContext(null);
 
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useLocalStorage("cart", []);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const addToCart = (product) => {
-    console.log("Adding product to cart:", product);
     const found = cart.find((item) => item._id === product._id);
-    console.log("Found in cart:", found);
-
     if (found) {
       setCart(
         cart.map((item) =>
