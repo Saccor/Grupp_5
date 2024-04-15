@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useCart } from "../context/CartContext";
 import { fetchProducts } from "../services/apiServices.js";
+import ProductDetailModal from "./ProductDetailModal";
 
 const ProductList = ({ category, search }) => {
   const [allProducts, setAllProducts] = useState([]);
   const { addToCart } = useCart();
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   useEffect(() => {
     const initFetch = async () => {
@@ -18,6 +20,14 @@ const ProductList = ({ category, search }) => {
 
     initFetch();
   }, []);
+
+  const handleProductClick = (product) => {
+    setSelectedProduct(product);
+  };
+
+  const closeDetailModal = () => {
+    setSelectedProduct(null);
+  };
 
   const filteredProducts = allProducts.filter((product) => {
     const productMatchesCategory = category
@@ -49,6 +59,20 @@ const ProductList = ({ category, search }) => {
             flexDirection: "column",
             alignItems: "center",
             backgroundColor: "#ffff",
+            borderRadius: "10px",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            cursor: "pointer",
+            transition:
+              "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
+          }}
+          onClick={() => handleProductClick(product)}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = "scale(1.05)";
+            e.currentTarget.style.boxShadow = "0 6px 12px rgba(0,0,0,0.2)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = "scale(1)";
+            e.currentTarget.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.1)";
           }}
         >
           <img
@@ -58,15 +82,51 @@ const ProductList = ({ category, search }) => {
               width: "160px",
               height: "160px",
               objectFit: "contain",
+              marginBottom: "10px",
             }}
           />
           <h3>{product.name}</h3>
           <p>{product.description}</p>
           <p>Kategori: {product.category}</p>
           <p>Pris: {product.price} Kr</p>
-          <button onClick={() => addToCart(product)}>Köp</button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              addToCart(product);
+            }}
+            style={{
+              alignSelf: "center",
+              marginTop: "auto",
+              padding: "10px 20px",
+              backgroundColor: "#ff0000",
+              color: "white",
+              border: "none",
+              borderRadius: "20px",
+              cursor: "pointer",
+              fontSize: "16px",
+              fontWeight: "bold",
+              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.15)",
+              transition: "background-color 0.3s ease-in-out",
+            }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.backgroundColor = "#cc0000")
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.backgroundColor = "#ff0000")
+            }
+          >
+            Köp
+          </button>
         </div>
       ))}
+
+      {selectedProduct && (
+        <ProductDetailModal
+          product={selectedProduct}
+          onClose={closeDetailModal}
+          addToCart={addToCart}
+        />
+      )}
     </div>
   );
 };
