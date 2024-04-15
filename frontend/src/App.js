@@ -1,21 +1,25 @@
+// App.js
+import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { Container } from "react-bootstrap";
 import Home from "./pages/Home.jsx";
+import Header from "./components/Header.jsx";
+import { CartProvider } from "./context/CartContext.jsx";
 import { Navbar } from "./components/Navbar.jsx";
-import { ShoppingCartProvider } from "./context/ShoppingCartContext.jsx";
+import CartSidebar from "./components/CartSidebar.jsx";
 
 function App() {
   return (
-    <>
-      <ShoppingCartProvider>
+    <CartProvider>
+      <div style={{ backgroundColor: "#f8f4f1", minHeight: "100vh" }}>
         <Navbar />
-        <Container>
-          <Routes>
-            <Route path="/" element={<Home />} />
-          </Routes>
-        </Container>
-      </ShoppingCartProvider>
-    </>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          {/* Add other routes here */}
+        </Routes>
+        <CartSidebar />
+      </div>
+    </CartProvider>
   );
 }
 

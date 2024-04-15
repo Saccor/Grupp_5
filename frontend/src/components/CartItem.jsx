@@ -1,48 +1,41 @@
+// CartItem.jsx
 import React from "react";
-import { useShoppingCart } from "../context/ShoppingCartContext";
-import { Button, Stack } from "react-bootstrap";
-import { formatCurrency } from "../utilities/formatCurrency";
+import { useCart } from "../context/CartContext.jsx";
 
-export function CartItem({ id, quantity, item }) {
-  const { removeFromCart, increaseCartQuantity, decreaseCartQuantity } =
-    useShoppingCart();
-
-  if (!item) return null;
+const CartItem = ({ item }) => {
+  const { updateQuantity, removeFromCart } = useCart();
 
   return (
-    <Stack direction="horizontal" gap={2} className="d-flex align-items-center">
-      <div className="me-auto">
-        <div>{item.name} </div>
-        <div className="text-muted" style={{ fontSize: ".75rem" }}>
-          {formatCurrency(item.price)}
-        </div>
-      </div>
-      <div className="me-auto">
-        <Button
-          variant="outline-secondary"
-          size="sm"
-          onClick={() => decreaseCartQuantity(item.id)}
-        >
-          -
-        </Button>{" "}
-        {quantity}{" "}
-        <Button
-          variant="outline-secondary"
-          size="sm"
-          onClick={() => increaseCartQuantity(item.id)}
-        >
+    <div
+      style={{
+        marginBottom: "10px",
+        borderBottom: "1px solid #ccc",
+        paddingBottom: "10px",
+      }}
+    >
+      <img
+        src={item.image}
+        alt={item.name}
+        style={{ width: "100px", height: "100px" }}
+      />
+      <h3>{item.name}</h3>
+      {/* <p>Description: {item.description}</p> */}
+      {/* <p>Category: {item.category}</p> */}
+      <p>
+        {item.quantity}st * {item.price} ={" "}
+        {(item.quantity * parseFloat(item.price)).toFixed(2)}Kr
+      </p>
+      <div>
+        <button onClick={() => updateQuantity(item._id, item.quantity + 1)}>
           +
-        </Button>
+        </button>
+        <button onClick={() => updateQuantity(item._id, item.quantity - 1)}>
+          -
+        </button>
+        <button onClick={() => removeFromCart(item._id)}>Remove</button>
       </div>
-
-      <div>{formatCurrency(item.price * quantity)}</div>
-      <Button
-        variant="outline-secondary"
-        size="sm"
-        onClick={() => removeFromCart(item.id)}
-      >
-        &times;
-      </Button>
-    </Stack>
+    </div>
   );
-}
+};
+
+export default CartItem;
