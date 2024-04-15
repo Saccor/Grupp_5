@@ -6,7 +6,7 @@ import Header from "./components/Header.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
 import { Navbar } from "./components/Navbar.jsx";
 import CartSidebar from "./components/CartSidebar.jsx";
-// import { Checkout } from "./components/Checkout.jsx";
+import Checkout from "./pages/Checkout.jsx";
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          {/* <Route path="/checkout" element={<Checkout />} /> */}
+          <Route path="/checkout" element={<Checkout />} />
           {/* Add other routes here */}
         </Routes>
         <CartSidebar />

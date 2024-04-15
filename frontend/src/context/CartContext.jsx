@@ -1,11 +1,21 @@
-import React, { createContext, useContext, useState } from "react";
-import { useLocalStorage } from "../hooks/useLocalStorage.jsx"; // Ensure the path is correct
+import React, { createContext, useContext, useState, useMemo } from "react";
+import { useLocalStorage } from "../hooks/useLocalStorage.jsx";
 
 const CartContext = createContext(null);
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useLocalStorage("cart", []);
   const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const totalPrice = useMemo(
+    () => cart.reduce((acc, item) => acc + item.price * item.quantity, 0),
+    [cart]
+  );
+  const tax = useMemo(() => (totalPrice * 0.12).toFixed(2), [totalPrice]);
+  const totalIncludingTax = useMemo(
+    () => (totalPrice + parseFloat(tax)).toFixed(2),
+    [totalPrice, tax]
+  );
 
   const addToCart = (product) => {
     const found = cart.find((item) => item._id === product._id);
@@ -46,6 +56,10 @@ export const CartProvider = ({ children }) => {
     <CartContext.Provider
       value={{
         cart,
+        totalPrice,
+        tax,
+        totalIncludingTax,
+        setCart,
         addToCart,
         removeFromCart,
         updateQuantity,
