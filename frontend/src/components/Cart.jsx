@@ -1,23 +1,24 @@
-// Cart.jsx
-import React from "react";
-import { useCart } from "../context/CartContext";
-import CartItem from "./CartItem";
+import React, { createContext, useContext } from "react";
+import { useLocalStorage } from "./useLocalStorage";
 
-const Cart = () => {
-  const { cart } = useCart();
+const CartContext = createContext();
 
-  if (cart.length === 0) {
-    return <p>Your cart is empty.</p>;
-  }
+export const CartProvider = ({ children }) => {
+  const [cart, setCart] = useLocalStorage("cart", []);
+
+  const addToCart = (product) => {
+    setCart([...cart, product]);
+  };
+
+  const removeFromCart = (productID) => {
+    setCart(cart.filter((item) => item._id !== productID));
+  };
 
   return (
-    <div>
-      <h2>Your Cart</h2>
-      {cart.map((item) => (
-        <CartItem key={item._id} item={item} />
-      ))}
-    </div>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+      {children}
+    </CartContext.Provider>
   );
 };
 
-export default Cart;
+export const useCart = () => useContext(CartContext);
