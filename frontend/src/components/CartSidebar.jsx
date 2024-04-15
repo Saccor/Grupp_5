@@ -1,12 +1,18 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import CartItem from "./CartItem";
 
 const CartSidebar = () => {
   const { cart, isCartOpen, toggleCart } = useCart();
-  const totalPrice = cart
-    .reduce((acc, item) => acc + item.price * item.quantity, 0)
-    .toFixed(2);
+  const navigate = useNavigate();
+
+  const totalPrice = cart.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
+  const tax = (totalPrice * 0.12).toFixed(2);
+  const totalIncludingTax = (totalPrice + parseFloat(tax)).toFixed(2);
 
   if (!isCartOpen) return null;
 
@@ -31,14 +37,23 @@ const CartSidebar = () => {
         onClick={toggleCart}
         style={{ marginLeft: "auto", cursor: "pointer" }}
       >
-        Close
+        Stäng
       </button>
       {cart.map((item) => (
         <CartItem key={item._id} item={item} />
       ))}
-      <div style={{ marginTop: "auto", fontWeight: "bold" }}>
-        Totalt: {totalPrice}Kr
+      <div style={{ marginTop: "auto", fontWeight: "light" }}>
+        Moms (12%): {tax} Kr
       </div>
+      <div style={{ fontWeight: "bold" }}>
+        Totalsumma: {totalIncludingTax} Kr
+      </div>
+      <button
+        onClick={() => navigate("/checkout")}
+        style={{ marginTop: "20px", padding: "10px 20px", cursor: "pointer" }}
+      >
+        Till Varukorgen
+      </button>
     </div>
   );
 };

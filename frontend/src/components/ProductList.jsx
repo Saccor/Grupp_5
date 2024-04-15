@@ -47,19 +47,24 @@ const ProductList = ({ category, search }) => {
             padding: "10px",
             display: "flex",
             flexDirection: "column",
+            alignItems: "center",
             backgroundColor: "#ffff",
           }}
         >
           <img
             src={product.image}
             alt={product.name}
-            style={{ width: "100%", height: "auto", objectFit: "contain" }}
+            style={{
+              width: "160px",
+              height: "160px",
+              objectFit: "contain",
+            }}
           />
           <h3>{product.name}</h3>
           <p>{product.description}</p>
-          <p>Category: {product.category}</p>
-          <p>Price: ${product.price}</p>
-          <button onClick={() => addToCart(product)}>Add to Cart</button>
+          <p>Kategori: {product.category}</p>
+          <p>Pris: {product.price} Kr</p>
+          <button onClick={() => addToCart(product)}>Köp</button>
         </div>
       ))}
     </div>
