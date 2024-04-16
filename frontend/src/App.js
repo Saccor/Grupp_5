@@ -7,6 +7,7 @@ import { CartProvider } from "./context/CartContext.jsx";
 import { Navbar } from "./components/Navbar.jsx";
 import CartSidebar from "./components/CartSidebar.jsx";
 import Checkout from "./pages/Checkout.jsx";
+import "./styles.css";
 
 function App() {
   return (

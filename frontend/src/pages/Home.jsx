@@ -30,7 +30,11 @@ const Home = () => {
         />
       </div>
       <div style={{ flex: 1 }}>
-        <ProductList category={selectedCategory} search={searchTerm} />
+        <ProductList
+          className="productList"
+          category={selectedCategory}
+          search={searchTerm}
+        />
       </div>
     </div>
   );

@@ -50,8 +50,6 @@ const ProductDetailModal = ({ product, onClose, addToCart }) => {
               border: "none",
               background: "transparent",
               cursor: "pointer",
-              fontSize: "20px",
-              fontWeight: "bold",
             }}
           >
             &times;
@@ -74,8 +72,6 @@ const ProductDetailModal = ({ product, onClose, addToCart }) => {
               border: "none",
               borderRadius: "20px",
               cursor: "pointer",
-              fontSize: "16px",
-              fontWeight: "bold",
               boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.15)",
               transition: "background-color 0.3s ease-in-out",
             }}

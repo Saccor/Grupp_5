@@ -103,8 +103,7 @@ const ProductList = ({ category, search }) => {
               border: "none",
               borderRadius: "20px",
               cursor: "pointer",
-              fontSize: "16px",
-              fontWeight: "bold",
+
               boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.15)",
               transition: "background-color 0.3s ease-in-out",
             }}
