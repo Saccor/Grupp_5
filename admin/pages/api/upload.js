@@ -4,7 +4,11 @@ import fs from 'fs';
 import mime from 'mime-types';
 import {mongooseConnect} from "@/lib/mongoose";
 import {isAdminRequest} from "@/pages/api/auth/[...nextauth]";
+<<<<<<< HEAD
 const bucketName = 'dawid-next-ecommerce';
+=======
+const bucketName = 'ecommerceg5';
+>>>>>>> adamtest
 
 export default async function handle(req,res) {
   await mongooseConnect();
@@ -19,7 +23,11 @@ export default async function handle(req,res) {
   });
   console.log('length:', files.file.length);
   const client = new S3Client({
+<<<<<<< HEAD
     region: 'us-east-1',
+=======
+    region: 'eu-north-1',
+>>>>>>> adamtest
     credentials: {
       accessKeyId: process.env.S3_ACCESS_KEY,
       secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
