@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema({
   name: String,
@@ -9,6 +9,10 @@ const productSchema = new mongoose.Schema({
   image: String,
 });
 
-const Product = mongoose.model('mehmet_new', productSchema, 'products');
+// Function to get the model for a given collection
+const getProductModel = (collectionName) => {
+  // This will create or return an existing model for the specified collection
+  return mongoose.model(collectionName, productSchema, collectionName);
+};
 
-export default Product;
+export default getProductModel;
