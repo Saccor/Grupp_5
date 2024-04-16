@@ -9,6 +9,6 @@ const productSchema = new mongoose.Schema({
   image: String,
 });
 
-const Product = mongoose.model('mehmet_new', productSchema, 'products');
+const Product = mongoose.model('products', productSchema,);
 
 export default Product;
