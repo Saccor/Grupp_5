@@ -11,9 +11,10 @@ productRoutes.get("/products", getAllProducts);
 productRoutes.get("/multi-collection-products", async (req, res) => {
   const collectionNames = [
     "products",
-    "PRODUCTS till Hakim's Livs",
     "Produkter till DB-Snacks & godis",
     "Produkts till DB-Storpack",
+    "AK-products DB: Skafferi,frukt och grönt",
+    "Andrey_Test.produkter_dryck_till_DB_long",
   ];
 
   try {
