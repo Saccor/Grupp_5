@@ -1,3 +1,4 @@
+import axios from "axios";
 import React from "react";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +7,20 @@ const Checkout = () => {
   const { cart, totalIncludingTax, tax, updateQuantity, removeFromCart } =
     useCart();
   const navigate = useNavigate();
+
+  const handlePurchase = async () => {
+    try {
+      const orderData = {
+        products: cart.map(item => ({ product: item._id, quantity: item.quantity })),
+      };
+
+      const response = await axios.post("http://localhost:3001/api/orders", orderData);
+      console.log("Order created:", response.data);
+
+    } catch (error) {
+      console.error("Error creating order:", error);
+    }
+  };
 
   if (cart.length === 0) {
     return <p>Din varukorg är tom.</p>;
@@ -124,7 +139,7 @@ const Checkout = () => {
         <div style={{ textAlign: "center" }}>
           <button
             type="button"
-            onClick={() => navigate("/stripe")}
+            onClick={handlePurchase}
             style={{
               padding: "10px",
               borderRadius: "5px",
