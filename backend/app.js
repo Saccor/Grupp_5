@@ -4,7 +4,6 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import productRoutes from "./routes/product.route.js";
 import orderRoutes from "./routes/order.route.js";
-import paymentRoutes from './routes/payment.route.js';
 
 dotenv.config();
 
@@ -28,7 +27,7 @@ mongoose
 // Use routes
 app.use("/api", productRoutes);
 app.use("/api", orderRoutes);
-app.use('/api', paymentRoutes);
+
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
