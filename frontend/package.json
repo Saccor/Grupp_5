@@ -18,7 +18,8 @@
     "react-bootstrap": "latest",
     "react-dom": "latest",
     "react-router-dom": "latest",
-    "react-scripts": "latest"
+    "react-scripts": "latest",
+    "stripe": "^15.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
