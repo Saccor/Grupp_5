@@ -5,40 +5,12 @@ const CartItem = ({ item }) => {
   const { updateQuantity, removeFromCart } = useCart();
 
   return (
-    <div
-      style={{
-        marginBottom: "10px",
-        borderBottom: "1px solid #ccc",
-        paddingBottom: "10px",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <img
-          src={item.image}
-          alt={item.name}
-          style={{
-            width: "100px",
-            height: "100px",
-            alignSelf: "start",
-            objectFit: "contain",
-          }}
-        />
+    <div className="cart-item">
+      <div className="cart-item-header">
+        <img src={item.image} alt={item.name} className="cart-item-image" />
         <button
           onClick={() => removeFromCart(item._id)}
-          style={{
-            border: "none",
-            background: "none",
-            cursor: "pointer",
-            padding: "5px",
-          }}
+          className="remove-button"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -50,26 +22,29 @@ const CartItem = ({ item }) => {
           </svg>
         </button>
       </div>
-      <div style={{ paddingLeft: "10px" }}>
+      <div className="cart-item-details">
         <h5>{item.name}</h5>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
+        <div className="cart-item-info">
           <p>{item.price} Kr</p>
           <div>
-            <button onClick={() => updateQuantity(item._id, item.quantity + 1)}>
-              +
-            </button>
-            <span style={{ margin: "0 10px" }}>{item.quantity} st</span>
-            <button onClick={() => updateQuantity(item._id, item.quantity - 1)}>
+            <button
+              onClick={() => updateQuantity(item._id, item.quantity - 1)}
+              className="quantity-btn"
+            >
               -
             </button>
+            <span style={{ margin: "0 10px" }}>{item.quantity} st</span>
+
+            <button
+              onClick={() => updateQuantity(item._id, item.quantity + 1)}
+              className="quantity-btn"
+            >
+              +
+            </button>
           </div>
-          <p>{(item.quantity * parseFloat(item.price)).toFixed(2)} Kr</p>
+          <p className="total-price">
+            {(item.quantity * parseFloat(item.price)).toFixed(2)} Kr
+          </p>
         </div>
       </div>
     </div>

@@ -135,7 +135,7 @@ const Checkout = () => {
               marginTop: "20px",
             }}
           >
-            Till kassan
+            Bekräfta köp
           </button>
         </div>
       </div>
