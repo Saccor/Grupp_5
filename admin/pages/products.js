@@ -11,7 +11,6 @@ export default function Products() {
       setProducts(response.data);
     });
   }, []);
-
   return (
     <Layout>
       <Link className="btn-primary" href={'/products/new'}>Add new product</Link>
