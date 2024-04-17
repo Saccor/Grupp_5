@@ -6,10 +6,17 @@ import productRoutes from "./routes/product.route.js";
 import orderRoutes from "./routes/order.route.js";
 
 dotenv.config();
+
 const app = express();
 
-app.use(cors());
+// Body parsing Middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Set up CORS
+app.use(cors({
+    origin: [`http://localhost:3000`, `http://127.0.0.1:3000`]
+}));
 
 // Connect to MongoDB
 mongoose
