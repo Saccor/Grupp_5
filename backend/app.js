@@ -1,9 +1,9 @@
-import express from "express";
-import cors from "cors";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
-import productRoutes from "./routes/product.route.js";
-import orderRoutes from "./routes/order.route.js";
+import express from 'express';
+import cors from 'cors';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import productRoutes from './routes/product.route.js';
+import orderRoutes from './routes/order.route.js';
 
 dotenv.config();
 
@@ -13,10 +13,21 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Set up CORS
-app.use(cors({
-    origin: [`http://localhost:3000`, `http://127.0.0.1:3000`]
-}));
+// Set up CORS to allow specific origins and pre-flight requests
+const allowedOrigins = ['http://localhost:3000', 'http://127.0.0.1:3000', 'https://grupp-5.vercel.app'];
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    optionsSuccessStatus: 200 // For legacy browser support
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // Enable pre-flight for all routes
 
 // Connect to MongoDB
 mongoose
@@ -27,7 +38,6 @@ mongoose
 // Use routes
 app.use("/api", productRoutes);
 app.use("/api", orderRoutes);
-
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
