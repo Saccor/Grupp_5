@@ -1,18 +1,13 @@
 import React, { useState } from "react";
 import ProductList from "../components/ProductList.jsx";
-import SearchAndFilter from "../components/SearchAndFilter.jsx";
+import CategoryFilter from "../components/CategoryFilter.jsx";
 import Header from "../components/Header.jsx";
 
 const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
-  };
-
-  const handleSearch = (term) => {
-    setSearchTerm(term);
   };
 
   return (
@@ -27,17 +22,10 @@ const Home = () => {
         }}
       >
         <div style={{ minWidth: "200px" }}>
-          <SearchAndFilter
-            onCategorySelect={handleCategorySelect}
-            onSearch={handleSearch}
-          />
+          <CategoryFilter onCategorySelect={handleCategorySelect} />
         </div>
         <div style={{ flex: 1 }}>
-          <ProductList
-            className="productList"
-            category={selectedCategory}
-            search={searchTerm}
-          />
+          <ProductList className="productList" category={selectedCategory} />
         </div>
       </div>
     </>

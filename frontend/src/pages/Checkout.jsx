@@ -6,6 +6,11 @@ const Checkout = () => {
   const { cart, totalPrice, tax, updateQuantity, removeFromCart } = useCart();
   const navigate = useNavigate();
 
+  console.log("State before navigation:", { products: cart });
+  const handlePurchase = () => {
+    navigate("/payment", { state: { products: cart } });
+  };
+
   if (cart.length === 0) {
     return <p>Din varukorg är tom.</p>;
   }
@@ -75,8 +80,16 @@ const Checkout = () => {
         <div style={{ textAlign: "center" }}>
           <button
             type="button"
-            onClick={() => navigate("/stripe")}
-            className="checkout-confirm-button"
+            onClick={handlePurchase}
+            style={{
+              padding: "10px",
+              borderRadius: "5px",
+              border: "none",
+              backgroundColor: "#007bff",
+              color: "white",
+              cursor: "pointer",
+              marginTop: "20px",
+            }}
           >
             Bekräfta köp
           </button>

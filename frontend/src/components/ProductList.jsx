@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import { SearchContext } from "../context/SearchContext.jsx";
 import { useCart } from "../context/CartContext";
 import { fetchProducts } from "../services/apiServices.js";
 import ProductDetailModal from "./ProductDetailModal";
-import Pagination from "./Pagination.jsx"; // Make sure you have this component
+import Pagination from "./Pagination.jsx";
 
-const ProductList = ({ category, search }) => {
+const ProductList = ({ category }) => {
+  const { searchTerm } = useContext(SearchContext);
   const [allProducts, setAllProducts] = useState([]);
   const { addToCart } = useCart();
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage] = useState(12);
+  const [productsPerPage] = useState(8);
 
   useEffect(() => {
     const initFetch = async () => {
@@ -37,8 +39,8 @@ const ProductList = ({ category, search }) => {
       ? product.category === category
       : true;
     const productName = product.name || "";
-    const productMatchesSearch = search
-      ? productName.toLowerCase().includes(search.toLowerCase())
+    const productMatchesSearch = searchTerm
+      ? productName.toLowerCase().includes(searchTerm.toLowerCase())
       : true;
     return productMatchesCategory && productMatchesSearch;
   });

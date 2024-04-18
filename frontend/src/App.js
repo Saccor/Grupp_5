@@ -1,14 +1,17 @@
-// App.js
-import React from "react";
+import React, {  } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
 import { Navbar } from "./components/Navbar.jsx";
 import CartSidebar from "./components/CartSidebar.jsx";
 import Checkout from "./pages/Checkout.jsx";
+import Payment from "./pages/Payment.jsx";
 import "./styles.css";
 
+
+
 function App() {
+  
   return (
     <CartProvider>
       <div style={{ backgroundColor: "#f8f4f1", minHeight: "100vh" }}>
@@ -16,7 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/checkout" element={<Checkout />} />
-          {/* Add other routes here */}
+          <Route path="/payment" element={<Payment />} />
         </Routes>
         <CartSidebar />
       </div>
