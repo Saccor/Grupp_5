@@ -1,4 +1,3 @@
-import axios from "axios";
 import React from "react";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
@@ -8,18 +7,9 @@ const Checkout = () => {
     useCart();
   const navigate = useNavigate();
 
-  const handlePurchase = async () => {
-    try {
-      const orderData = {
-        products: cart.map(item => ({ product: item._id, quantity: item.quantity })),
-      };
-
-      const response = await axios.post("http://localhost:3001/api/orders", orderData);
-      console.log("Order created:", response.data);
-
-    } catch (error) {
-      console.error("Error creating order:", error);
-    }
+  console.log("State before navigation:", { products: cart });
+  const handlePurchase = () => {
+    navigate("/payment", { state: { products: cart } });
   };
 
   if (cart.length === 0) {

@@ -7,6 +7,7 @@ import { CartProvider } from "./context/CartContext.jsx";
 import { Navbar } from "./components/Navbar.jsx";
 import CartSidebar from "./components/CartSidebar.jsx";
 import Checkout from "./pages/Checkout.jsx";
+import Payment from "./pages/Payment.jsx";
 import "./styles.css";
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/checkout" element={<Checkout />} />
-          {/* Add other routes here */}
+          <Route path="/payment" element={<Payment />} />
         </Routes>
         <CartSidebar />
       </div>
