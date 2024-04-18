@@ -2,24 +2,30 @@ import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema(
   {
-    products: [
+    orderItems: [
       {
         product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
         quantity: { type: Number, required: true },
       },
     ],
-    customerDetails: {
-      name: String,
-      email: String,
-      address: String,
+    customer: {
+      firstName: { type: String, required: true },
+      lastName: { type: String, required: true },
+      email: { type: String, required: true },
+      address: { type: String, required: true },
     },
-    status: {
+    paymentDetails: {
+      cardNumber: { type: String, required: true, select: false }, // Should be encrypted
+      cvv: { type: String, required: true, select: false }, // Should be encrypted
+      expiryDate: { type: String, required: true },
+    },
+    paymentStatus: {
       type: String,
-      default: "Pending",
-      enum: ["Pending", "Completed", "Cancelled"],
+      default: "Unpaid",
+      enum: ["Paid", "Unpaid"],
     },
-    total: { type: Number, required: true },
-    paid: { type: Boolean, default: false },
+    tax: { type: Number, required: true },
+    totalIncludingVAT: { type: Number, required: true }, // total price including Value added Tax
   },
   { timestamps: true }
 );

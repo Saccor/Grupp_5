@@ -10,7 +10,8 @@
     "mongodb": "latest",
     "mongoose": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "stripe": "^15.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
