@@ -35,16 +35,21 @@ const Payment = () => {
     try {
         console.log("State:", state);
         const orderItems = state.products ? state.products.map((product) => ({
-            product: product._id,
+            product: product,
             quantity: product.quantity,
           })) : [];
 
-      const total = orderItems.reduce(
-        (acc, item) => acc + item.product.price * item.quantity,
-        0
-      );
-
-      const totalIncludingVAT = total * 1.12; // Assuming VAT is 12%
+          
+          const total = orderItems.reduce(
+            (acc, item) => acc + item.product.price * item.quantity, 0
+              );
+              
+              
+    const totalIncludingVAT = total * 1.12; // Assuming VAT is 12%
+              
+      console.log("Order Items:", orderItems);
+      console.log("Total:", total);
+      console.log("Total Including VAT:", totalIncludingVAT);
 
       const orderData = {
         orderItems: orderItems,
@@ -54,6 +59,8 @@ const Payment = () => {
         total: total,
         totalIncludingVAT: totalIncludingVAT,
       };
+
+      console.log("Order Data:", orderData);
 
       const response = await axios.post(
         "http://localhost:3001/api/orders",
