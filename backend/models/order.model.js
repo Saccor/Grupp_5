@@ -15,8 +15,8 @@ const orderSchema = new mongoose.Schema(
       address: { type: String, required: true },
     },
     paymentDetails: {
-      cardNumber: { type: String, required: true, select: false }, // Should be encrypted
-      cvv: { type: String, required: true, select: false }, // Should be encrypted
+      cardNumber: { type: String, required: true, select: false }, 
+      cvv: { type: String, required: true, select: false }, 
       expiryDate: { type: String, required: true },
     },
     paymentStatus: {
@@ -24,8 +24,9 @@ const orderSchema = new mongoose.Schema(
       default: "Unpaid",
       enum: ["Paid", "Unpaid"],
     },
-    tax: { type: Number, required: true },
-    totalIncludingVAT: { type: Number, required: true }, // total price including Value added Tax
+    total: { type: Number, required: true },
+    totalIncludingVAT: { type: Number, required: true },
+    paid: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
