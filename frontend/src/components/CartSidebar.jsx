@@ -28,7 +28,7 @@ const CartSidebar = () => {
           onClick={() => navigate("/checkout")}
           className="checkout-button"
         >
-          Till kassan
+          Till varukogen
         </button>
       </div>
     </>

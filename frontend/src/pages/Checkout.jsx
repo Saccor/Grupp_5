@@ -78,7 +78,7 @@ const Checkout = () => {
             onClick={() => navigate("/stripe")}
             className="checkout-confirm-button"
           >
-            Bekräfta köp
+            Till kassan
           </button>
         </div>
       </div>

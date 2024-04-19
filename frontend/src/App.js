@@ -13,7 +13,7 @@ function App() {
   return (
     <SearchContext.Provider value={{ searchTerm, setSearchTerm }}>
       <CartProvider>
-        <div style={{ backgroundColor: "#f8f4f1", minHeight: "100vh" }}>
+        <div style={{ minHeight: "100vh" }}>
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
