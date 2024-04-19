@@ -11,11 +11,16 @@ export const CartProvider = ({ children }) => {
     () => cart.reduce((acc, item) => acc + item.price * item.quantity, 0),
     [cart]
   );
-  const tax = useMemo(() => (totalPrice * 0.12).toFixed(2), [totalPrice]);
-  const totalIncludingTax = useMemo(
-    () => (totalPrice + parseFloat(tax)).toFixed(2),
-    [totalPrice, tax]
-  );
+
+  const taxRate = 0.12;
+
+  const basePrice = useMemo(() => {
+    return (totalPrice / (1 + taxRate)).toFixed(2);
+  }, [totalPrice]);
+
+  const tax = useMemo(() => {
+    return (totalPrice - parseFloat(basePrice)).toFixed(2);
+  }, [totalPrice, basePrice]);
 
   const addToCart = (product) => {
     const found = cart.find((item) => item._id === product._id);
@@ -56,9 +61,9 @@ export const CartProvider = ({ children }) => {
     <CartContext.Provider
       value={{
         cart,
-        totalPrice,
+        basePrice,
         tax,
-        totalIncludingTax,
+        totalPrice,
         setCart,
         addToCart,
         removeFromCart,

@@ -1,23 +1,38 @@
+import React, { useContext } from "react";
 import { Button, Container, Nav, Navbar as NavbarBs } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import { useCart } from "../context/CartContext";
+import SearchComponent from "./SearchComponent.jsx";
+import { SearchContext } from "../context/SearchContext.jsx";
 
 export function Navbar() {
+  const { searchTerm, setSearchTerm } = useContext(SearchContext);
   const { toggleCart, cart } = useCart();
-
   const cartQuantity = cart.reduce((count, item) => count + item.quantity, 0);
   return (
     <NavbarBs sticky="top" className="bg-white shadow-sm mb-3">
       <Container>
         <Nav className="me-auto">
           <Nav.Link as={NavLink} to="/">
-            Home
+            Hem
           </Nav.Link>
           <Nav.Link as={NavLink} to="/checkout">
-            Checkout
+            Varukorg
           </Nav.Link>
         </Nav>
-
+        <div style={{ flex: 1 }}></div>
+        <div
+          style={{
+            width: "500px",
+            flex: 1,
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "5px",
+          }}
+        >
+          <SearchComponent onSearch={setSearchTerm} searchTerm={searchTerm} />
+        </div>
+        <div style={{ flex: 1 }}></div>
         <Button
           onClick={toggleCart}
           style={{ width: "3rem", height: "3rem", position: "relative" }}
