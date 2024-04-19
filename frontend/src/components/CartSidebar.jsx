@@ -2,20 +2,12 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import CartItem from "./CartItem";
-import "../styles.css"; // This imports your centralized stylesheet
+import "../styles.css";
 
 const CartSidebar = () => {
-  const { cart, isCartOpen, toggleCart } = useCart();
+  const { cart, isCartOpen, toggleCart, tax, totalPrice } = useCart();
   const navigate = useNavigate();
 
-  const totalPrice = cart.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
-  const tax = (totalPrice * 0.12).toFixed(2);
-  const totalIncludingTax = (totalPrice + parseFloat(tax)).toFixed(2);
-
-  // Return null or the sidebar structure based on `isCartOpen`
   return (
     <>
       {isCartOpen && <div className="backdrop" onClick={toggleCart}></div>}
@@ -28,9 +20,9 @@ const CartSidebar = () => {
         {cart.map((item) => (
           <CartItem key={item._id} item={item} />
         ))}
-        <div className="total-section">Moms (12%): {tax} Kr</div>
+        <div className="total-section">Moms (12% inkluderat): {tax} Kr</div>
         <div className="total-section bold">
-          Totalsumma: {totalIncludingTax} Kr
+          Totalsumma: {totalPrice.toFixed(2)} Kr
         </div>
         <button
           onClick={() => navigate("/checkout")}

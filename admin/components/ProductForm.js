@@ -6,92 +6,87 @@ import { ReactSortable } from "react-sortablejs";
 
 export default function ProductForm({
   _id,
-  name: existingName, // Updated from existingTitle
+  name: existingName,
   description: existingDescription,
   price: existingPrice,
   images: existingImages,
   category: assignedCategory,
   properties: assignedProperties, // Consider if this is still needed based on your schema updates
 }) {
-  const [name, setName] = useState(existingName || ''); // Updated from title to name
+  const [name, setName] = useState(existingName || '');
   const [description, setDescription] = useState(existingDescription || '');
   const [category, setCategory] = useState(assignedCategory || '');
   const [price, setPrice] = useState(existingPrice || '');
   const [images, setImages] = useState(existingImages || []);
-  const [goToProducts, setGoToProducts] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
-  const [categories, setCategories] = useState([]);
   const router = useRouter();
-
-  useEffect(() => {
-    axios.get('/api/categories').then(result => {
-      setCategories(result.data);
-    });
-  }, []);
 
   async function saveProduct(ev) {
     ev.preventDefault();
     const data = {
-      name, // Updated field key
+      name,
       description,
       price,
+      category, // This will now take any text input by the user
+      images, // Assuming the first image in the array
       inStock: true, // Assuming always true when creating/updating, adjust as needed
-      category,
-      image: images.length > 0 ? images[0] : '', // Assuming the first image in the array
     };
 
     try {
       if (_id) {
         // Update existing product
-        await axios.put(`/api/products/${_id}`, data); // Adjust if necessary to match your API route
+        await axios.put(`/api/products/${_id}`, data);
       } else {
         // Create new product
         await axios.post('/api/products', data);
       }
-      setGoToProducts(true);
+      router.push('/products'); // Redirect to products page after saving
     } catch (error) {
       console.error('Failed to save product:', error);
       // Handle error appropriately
     }
   }
 
-  if (goToProducts) {
-    router.push('/products');
-  }
-
   async function uploadImages(ev) {
     const files = ev.target.files;
     if (files.length > 0) {
       setIsUploading(true);
-      const data = new FormData();
+      const formData = new FormData();
       for (const file of files) {
-        data.append('file', file);
+        formData.append('file', file);
       }
-      const response = await axios.post('/api/upload', data);
-      setImages(oldImages => [...oldImages, ...response.data.links]);
+      try {
+        const response = await axios.post('/api/upload', formData);
+        setImages(oldImages => [...oldImages, ...response.data.links]); // Assume response.data.links contains the URLs of the uploaded images
+      } catch (error) {
+        console.error('Error uploading images:', error);
+        // Handle error appropriately
+      }
       setIsUploading(false);
     }
   }
 
-  function updateImagesOrder(images) {
-    setImages(images);
+  function updateImagesOrder(sortedImages) {
+    setImages(sortedImages);
   }
 
   return (
     <form onSubmit={saveProduct}>
-      <label>Product name</label>
+      <label>Product Name</label>
       <input
         type="text"
         placeholder="Product name"
         value={name}
         onChange={ev => setName(ev.target.value)}
       />
+
       <label>Description</label>
       <textarea
         placeholder="Description"
         value={description}
         onChange={ev => setDescription(ev.target.value)}
       />
+
       <label>Price (in USD)</label>
       <input
         type="number"
@@ -99,16 +94,15 @@ export default function ProductForm({
         value={price}
         onChange={ev => setPrice(ev.target.value)}
       />
+
       <label>Category</label>
-      <select
+      <input
+        type="text"
+        placeholder="Category"
         value={category}
         onChange={ev => setCategory(ev.target.value)}
-      >
-        <option value="">No parent category</option>
-        {categories.map(c => (
-          <option key={c._id} value={c._id}>{c.name}</option>
-        ))}
-      </select>
+      />
+
       <label>Photos</label>
       <div className="mb-2 flex flex-wrap gap-1">
         <ReactSortable
@@ -118,7 +112,7 @@ export default function ProductForm({
         >
           {images.map((link, index) => (
             <div key={index} className="h-24 bg-white p-4 shadow-sm rounded-sm border border-gray-200">
-              <img src={link} alt="" className="rounded-lg"/>
+              <img src={link} alt="product" className="rounded-lg"/>
             </div>
           ))}
         </ReactSortable>
@@ -128,6 +122,7 @@ export default function ProductForm({
           <input type="file" onChange={uploadImages} className="hidden" />
         </label>
       </div>
+
       <button type="submit" className="btn-primary">Save</button>
     </form>
   );
