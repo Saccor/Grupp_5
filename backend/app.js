@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Set up CORS to allow specific origins and pre-flight requests
-const allowedOrigins = ['http://localhost:3000', 'http://127.0.0.1:3000', 'https://grupp-5.vercel.app'];
+const allowedOrigins = ['http://localhost:3000', 'http://127.0.0.1:3000', 'https://grupp-5.vercel.app', 'https://grupp-5.vercel.app/api/orders'];
 const corsOptions = {
     origin: function (origin, callback) {
         if (!origin || allowedOrigins.includes(origin)) {
