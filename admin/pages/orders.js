@@ -6,12 +6,18 @@ export default function OrdersPage() {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    axios.get('/api/orders')
-      .then(response => {
-        setOrders(response.data);
-      })
-      .catch(error => console.error("Failed to fetch orders:", error));
+    axios.get('/api/orders').then(response => {
+      setOrders(response.data);
+    });
   }, []);
+
+  const handlePaymentStatusChange = (orderId, currentStatus) => {
+    axios.put('/api/orders', { orderId, paid: !currentStatus })
+      .then(response => {
+        setOrders(orders.map(order => order._id === orderId ? response.data : order));
+      })
+      .catch(error => console.error("Failed to update order:", error));
+  };
 
   return (
     <Layout>
@@ -23,6 +29,7 @@ export default function OrdersPage() {
             <th>Paid</th>
             <th>Recipient</th>
             <th>Products</th>
+            <th>Change Status</th>
           </tr>
         </thead>
         <tbody>
@@ -44,8 +51,13 @@ export default function OrdersPage() {
                 </div>
               ))}
             </td>
+            <td>
+              <button onClick={() => handlePaymentStatusChange(order._id, order.paid)}>
+                Mark as {order.paid ? 'Unpaid' : 'Paid'}
+              </button>
+            </td>
           </tr>
-        )) : <tr><td colSpan="4">No orders found</td></tr>}
+        )) : <tr><td colSpan="5">No orders found</td></tr>}
         </tbody>
       </table>
     </Layout>
