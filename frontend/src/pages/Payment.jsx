@@ -63,7 +63,7 @@ const Payment = () => {
       console.log("Order Data:", orderData);
 
       const response = await axios.post(
-        "http://localhost:3001/api/orders",
+        "https://grupp-5.vercel.app/api/orders",
         orderData
       );
       console.log("Order created:", response.data);
