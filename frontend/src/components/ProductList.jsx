@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
+import { SearchContext } from "../context/SearchContext.jsx";
 import { useCart } from "../context/CartContext";
 import { fetchProducts } from "../services/apiServices.js";
 import ProductDetailModal from "./ProductDetailModal";
-import Pagination from "./Pagination.jsx"; // Make sure you have this component
+import Pagination from "./Pagination.jsx";
 
-const ProductList = ({ category, search }) => {
+const ProductList = ({ category }) => {
+  const { searchTerm } = useContext(SearchContext);
   const [allProducts, setAllProducts] = useState([]);
   const { addToCart } = useCart();
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage] = useState(12);
+  const [productsPerPage] = useState(16);
 
   useEffect(() => {
     const initFetch = async () => {
@@ -36,11 +38,12 @@ const ProductList = ({ category, search }) => {
     const productMatchesCategory = category
       ? product.category === category
       : true;
-    const productName = product.name || "";
-    const productMatchesSearch = search
-      ? productName.toLowerCase().includes(search.toLowerCase())
-      : true;
-    return productMatchesCategory && productMatchesSearch;
+    return (
+      productMatchesCategory &&
+      (product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.description.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
   });
 
   const indexOfLastProduct = currentPage * productsPerPage;
@@ -54,31 +57,11 @@ const ProductList = ({ category, search }) => {
 
   return (
     <div>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))",
-          gap: "20px",
-          padding: "20px",
-        }}
-      >
+      <div className="product-grid-container">
         {currentProducts.map((product) => (
           <div
             key={product._id}
-            style={{
-              fontFamily: "Lato, sans-serif",
-              border: "1px solid #ccc",
-              padding: "10px",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              backgroundColor: "#ffff",
-              borderRadius: "10px",
-              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-              cursor: "pointer",
-              transition:
-                "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
-            }}
+            className="product-card"
             onClick={() => handleProductClick(product)}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = "scale(1.05)";
@@ -117,7 +100,6 @@ const ProductList = ({ category, search }) => {
                 border: "none",
                 borderRadius: "20px",
                 cursor: "pointer",
-
                 boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.15)",
                 transition: "background-color 0.3s ease-in-out",
               }}
@@ -137,6 +119,7 @@ const ProductList = ({ category, search }) => {
         productsPerPage={productsPerPage}
         totalProducts={filteredProducts.length}
         paginate={paginate}
+        currentPage={currentPage}
       />
       {selectedProduct && (
         <ProductDetailModal
