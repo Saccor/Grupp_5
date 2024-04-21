@@ -63,7 +63,7 @@ const Payment = () => {
       console.log("Order Data:", orderData);
 
       const response = await axios.post(
-      `${process.env.REACT_APP_BACKEND_URL}api/orders`,
+      `${process.env.REACT_APP_BACKEND_URL}/api/orders`,
         orderData
       );
       console.log("Order created:", response.data);
