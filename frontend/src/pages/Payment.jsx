@@ -54,7 +54,7 @@ const CheckoutForm = () => {
         };
 
         try {
-            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/pay`, orderData);
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/orders`, orderData);
             console.log("Payment and Order processed:", response.data);
             navigate("/order-confirmation");
         } catch (error) {
