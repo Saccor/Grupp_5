@@ -83,7 +83,7 @@ const Checkout = () => {
             onClick={handlePurchase}
             className="checkout-confirm-button"
           >
-            Till kassan
+            Till betalning
           </button>
         </div>
       </div>

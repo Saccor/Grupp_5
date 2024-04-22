@@ -8,6 +8,10 @@ const CategoryFilter = ({ onCategorySelect }) => {
     "Snacks & Godis",
     "Bröd & Kakor",
     "Barn & Baby",
+    "Frukt och Grönt",
+    "Eko",
+    "Glutenfri mat",
+    "Veganskt",
   ];
 
   return (
