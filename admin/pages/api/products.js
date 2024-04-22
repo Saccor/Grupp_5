@@ -16,31 +16,50 @@ export default async function handle(req, res) {
   }
 
   if (method === 'POST') {
-    const { name, description, price, inStock, category, image } = req.body;
+    const { name, description, price, inStock, image,category} = req.body;
     const productDoc = await Product.create({
-      name, 
-      description, 
-      price, 
-      inStock, 
-      category, 
-      image,
-    });
+      name,description,price,inStock, category, image,
+    })
     res.json(productDoc);
   }
 
+
   if (method === 'PUT') {
-    // Use the new field names from the updated schema
-    const { name, description, price, inStock, category, image, _id } = req.body;
-    await Product.updateOne({ _id }, {
-      name, 
-      description, 
-      price, 
-      inStock, 
-      category, 
-      image,
-    });
-    res.json(true);
-  }
+    const {
+        _id, // Ensure you're using _id as the identifier
+        name, 
+        description, 
+        price, 
+        images, // Check if this should be 'image' based on your schema
+        category, 
+        inStock
+    } = req.body;
+
+    if (!_id) {
+        return res.status(400).json({ message: 'Product ID (_id) must be provided.' });
+    }
+
+    try {
+        // Attempt to update the product
+        const updateResult = await Product.updateOne(
+            { _id },
+            { name, description, price, inStock, category, image: images }, // Make sure to adjust 'images' to 'image' if necessary
+            { new: true, runValidators: true } // Ensure that model validations are applied
+        );
+
+        // Check if the update was successful
+        if (updateResult.modifiedCount === 0) {
+            return res.status(404).json({ message: 'Product not found or no updates made.' });
+        }
+
+        res.status(200).json({ message: 'Product updated successfully.' });
+    } catch (error) {
+        console.error('Failed to update product:', error);
+        res.status(500).json({ message: 'Failed to update product.', error: error.toString() });
+    }
+}
+
+
 
   if (method === 'DELETE') {
     if (req.query?.id) {
@@ -48,3 +67,4 @@ export default async function handle(req, res) {
       res.json(true);
     }
   }
+}
