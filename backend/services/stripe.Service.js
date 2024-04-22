@@ -1,5 +1,5 @@
 // services/stripeService.js
-import stripe from '../config/stripeConfig.js';
+import stripe from '../stripeConfig.js';
 
 const createPaymentIntent = async (amount, currency = 'usd') => {
   try {

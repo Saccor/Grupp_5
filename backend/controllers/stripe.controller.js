@@ -1,5 +1,5 @@
 // controllers/stripe.controller.js
-import stripeService from '../services/stripeService.js';
+import stripeService from '../services/stripe.Service.js';
 import Order from '../models/order.model.js';
 
 export const handleStripePayment = async (req, res) => {
