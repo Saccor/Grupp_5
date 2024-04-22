@@ -33,20 +33,21 @@ const Payment = () => {
     e.preventDefault();
 
     try {
-        console.log("State:", state);
-        const orderItems = state.products ? state.products.map((product) => ({
+      console.log("State:", state);
+      const orderItems = state.products
+        ? state.products.map((product) => ({
             product: product,
             quantity: product.quantity,
-          })) : [];
+          }))
+        : [];
 
-          
-          const total = orderItems.reduce(
-            (acc, item) => acc + item.product.price * item.quantity, 0
-              );
-              
-              
-    const totalIncludingVAT = total * 1.12; // Assuming VAT is 12%
-              
+      const total = orderItems.reduce(
+        (acc, item) => acc + item.product.price * item.quantity,
+        0
+      );
+
+      const totalIncludingVAT = total * 1.12; // Assuming VAT is 12%
+
       console.log("Order Items:", orderItems);
       console.log("Total:", total);
       console.log("Total Including VAT:", totalIncludingVAT);
@@ -63,7 +64,7 @@ const Payment = () => {
       console.log("Order Data:", orderData);
 
       const response = await axios.post(
-      `${process.env.REACT_APP_BACKEND_URL}/api/orders`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/orders`,
         orderData
       );
       console.log("Order created:", response.data);
@@ -75,51 +76,57 @@ const Payment = () => {
   };
 
   return (
-    <div>
-      <h2>Payment Details</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="payment-form">
+      <div className="payment-section">
+        <h2>Kunduppgifter</h2>
+        <form onSubmit={handleSubmit}>
+          <label>
+            Förnamn:
+            <input
+              type="text"
+              name="firstName"
+              value={customerDetails.firstName}
+              onChange={handleInputChange}
+              required
+            />
+          </label>
+          <label>
+            Efternamn:
+            <input
+              type="text"
+              name="lastName"
+              value={customerDetails.lastName}
+              onChange={handleInputChange}
+              required
+            />
+          </label>
+          <label>
+            Email:
+            <input
+              type="email"
+              name="email"
+              value={customerDetails.email}
+              onChange={handleInputChange}
+              required
+            />
+          </label>
+          <label>
+            Adress:
+            <input
+              type="text"
+              name="address"
+              value={customerDetails.address}
+              onChange={handleInputChange}
+              required
+            />
+          </label>
+        </form>
+      </div>
+
+      <div className="payment-section">
+        <h2>Betalningsuppgifter</h2>
         <label>
-          First Name:
-          <input
-            type="text"
-            name="firstName"
-            value={customerDetails.firstName}
-            onChange={handleInputChange}
-            required
-          />
-        </label>
-        <label>
-          Last Name:
-          <input
-            type="text"
-            name="lastName"
-            value={customerDetails.lastName}
-            onChange={handleInputChange}
-            required
-          />
-        </label>
-        <label>
-          Email:
-          <input
-            type="email"
-            name="email"
-            value={customerDetails.email}
-            onChange={handleInputChange}
-            required
-          />
-        </label>
-        <label>
-          Address:
-          <input
-            type="text"
-            name="address"
-            value={customerDetails.address}
-            onChange={handleInputChange}
-            required
-          />
-        </label>
-        <label>
-          Card Number:
+          Kortnummer:
           <input
             type="text"
             name="cardNumber"
@@ -139,7 +146,7 @@ const Payment = () => {
           />
         </label>
         <label>
-          Expiry Date:
+          Löper ut:
           <input
             type="text"
             name="expiryDate"
@@ -148,8 +155,9 @@ const Payment = () => {
             required
           />
         </label>
-        <button type="submit">Submit Payment</button>
-      </form>
+      </div>
+
+      <button type="submit">Bekräfta köp</button>
     </div>
   );
 };
