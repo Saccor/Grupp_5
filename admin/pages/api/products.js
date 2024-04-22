@@ -16,7 +16,6 @@ export default async function handle(req, res) {
   }
 
   if (method === 'POST') {
-    // Use the new field names from the updated schema
     const { name, description, price, inStock, category, image } = req.body;
     const productDoc = await Product.create({
       name, 
@@ -49,4 +48,3 @@ export default async function handle(req, res) {
       res.json(true);
     }
   }
-}
