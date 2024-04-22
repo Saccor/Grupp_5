@@ -26,6 +26,10 @@ const ProductList = ({ category }) => {
     initFetch();
   }, []);
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [category]);
+
   const handleProductClick = (product) => {
     setSelectedProduct(product);
   };
