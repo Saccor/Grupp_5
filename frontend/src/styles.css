@@ -329,13 +329,13 @@ body {
 }
 
 .payment-form {
+  max-width: 800px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 20px;
   align-items: start;
   padding: 20px;
-  max-width: 800px; /* Increased width for better alignment */
-  margin: auto;
+  margin: 20px auto;
 }
 
 .payment-section {
@@ -345,11 +345,17 @@ body {
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  min-height: 300px; /* Set a minimum height for both sections */
+  min-height: 300px;
+  margin-top: 10px;
 }
 
 .payment-form label {
   margin-bottom: 10px;
+}
+
+.payment-form h2 {
+  display: flex;
+  justify-content: center;
 }
 
 .payment-form input {
@@ -357,15 +363,16 @@ body {
   margin-top: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  width: calc(100% - 16px); /* Adjust width to account for padding */
+  width: calc(100% - 16px);
 }
 
 .payment-form button {
-  grid-column: span 2; /* Span across both columns */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 8px 14px;
   margin-top: 20px;
   width: 50%;
-  justify-self: center; /* Center the button */
   background-color: #e60000;
   color: white;
   border-radius: 20px;
@@ -375,4 +382,11 @@ body {
 
 .payment-form button:hover {
   background-color: #cc0000;
+}
+
+@media (max-width: 768px) {
+  .payment-form {
+    max-width: 100%;
+    padding: 10px;
+  }
 }

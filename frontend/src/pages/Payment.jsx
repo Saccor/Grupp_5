@@ -77,9 +77,9 @@ const Payment = () => {
 
   return (
     <div className="payment-form">
-      <div className="payment-section">
-        <h2>Kunduppgifter</h2>
-        <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
+        <div className="payment-section">
+          <h2>Kunduppgifter</h2>
           <label>
             Förnamn:
             <input
@@ -120,44 +120,45 @@ const Payment = () => {
               required
             />
           </label>
-        </form>
-      </div>
+        </div>
 
-      <div className="payment-section">
-        <h2>Betalningsuppgifter</h2>
-        <label>
-          Kortnummer:
-          <input
-            type="text"
-            name="cardNumber"
-            value={paymentDetails.cardNumber}
-            onChange={handlePaymentInputChange}
-            required
-          />
-        </label>
-        <label>
-          CVV:
-          <input
-            type="text"
-            name="cvv"
-            value={paymentDetails.cvv}
-            onChange={handlePaymentInputChange}
-            required
-          />
-        </label>
-        <label>
-          Löper ut:
-          <input
-            type="text"
-            name="expiryDate"
-            value={paymentDetails.expiryDate}
-            onChange={handlePaymentInputChange}
-            required
-          />
-        </label>
-      </div>
+        <div className="payment-section">
+          <h2>Betalningsuppgifter</h2>
 
-      <button type="submit">Bekräfta köp</button>
+          <label>
+            Kortnummer:
+            <input
+              type="text"
+              name="cardNumber"
+              value={paymentDetails.cardNumber}
+              onChange={handlePaymentInputChange}
+              required
+            />
+          </label>
+          <label>
+            CVV:
+            <input
+              type="text"
+              name="cvv"
+              value={paymentDetails.cvv}
+              onChange={handlePaymentInputChange}
+              required
+            />
+          </label>
+          <label>
+            Löper ut:
+            <input
+              type="text"
+              name="expiryDate"
+              value={paymentDetails.expiryDate}
+              onChange={handlePaymentInputChange}
+              required
+            />
+          </label>
+        </div>
+
+        <button type="submit">Bekräfta köp</button>
+      </form>
     </div>
   );
 };
