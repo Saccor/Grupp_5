@@ -169,7 +169,7 @@ const Payment = () => {
           </label>
         </div>
 
-        <button type="submit">Bekräfta köp</button>
+        <button type="submit" style={{ width: '100%', padding: '10px 20px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', marginTop: '20px' }}>Bekräfta köp</button>
       </form>
     </div>
   );

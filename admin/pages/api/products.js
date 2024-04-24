@@ -30,7 +30,7 @@ export default async function handle(req, res) {
         name, 
         description, 
         price, 
-        images, // Check if this should be 'image' based on your schema
+        image, // Check if this should be 'image' based on your schema
         category, 
         inStock
     } = req.body;
@@ -43,7 +43,7 @@ export default async function handle(req, res) {
         // Attempt to update the product
         const updateResult = await Product.updateOne(
             { _id },
-            { name, description, price, inStock, category, image: images }, // Make sure to adjust 'images' to 'image' if necessary
+            { name, description, price, inStock, category, image: image }, // Make sure to adjust 'images' to 'image' if necessary
             { new: true, runValidators: true } // Ensure that model validations are applied
         );
 
