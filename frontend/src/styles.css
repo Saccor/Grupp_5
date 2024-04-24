@@ -8,24 +8,44 @@ body {
   font-family: "Lato", sans-serif;
 }
 
-.header {
+/* .container {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 75%;
-  height: 200px;
-  background-color: #ffff;
-  padding: 0;
+  width: 100%;
+  height: auto;
+} */
+
+/* .header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  height: 50vh;
   margin: 0 auto;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
+} */
+
+@keyframes gentleZoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.1);
+  }
 }
 
-.header h1 {
-  margin: 0;
-  font-family: "Lato", sans-serif;
-  font-size: 4.5em;
-  color: #1b1b1a;
+.header-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  height: auto;
+  object-fit: contain;
+  margin: 0 auto;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: gentleZoom 10s ease-in-out infinite alternate;
 }
 
 .productList {
