@@ -136,8 +136,7 @@ const Payment = () => {
       <>
         <div className="confirmation-message">
           <h2>Tack för ditt köp!</h2>
-          <h4>Vi skickar en orderbekräftelse till din e-post med ditt kvitto.</h4>
-          <h4>Din beställning kommer att levereras inom 3-5 arbetsdagar.</h4>
+          <h4>Du kan plocka upp din order inom 2 timmar på St:eriksgatan 33.</h4>
         </div>
         <div className="checkout-container">
           <div className="checkout-box">
