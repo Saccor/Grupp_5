@@ -53,6 +53,10 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  const clearCart = () => {
+    setCart([]);
+  };
+
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
   };
@@ -69,6 +73,7 @@ export const CartProvider = ({ children }) => {
         removeFromCart,
         updateQuantity,
         isCartOpen,
+        clearCart,
         toggleCart,
       }}
     >
