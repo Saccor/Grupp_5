@@ -29,7 +29,7 @@ export default function Products() {
           {products.map(product => (
             <tr key={product._id}>
               <td>{product.name}</td> {/* Updated to use 'name' instead of 'title' */}
-              <td>${product.price.toFixed(2)}</td>
+              <td>Kr{product.price.toFixed(2)}</td>
               <td>{product.inStock ? 'Yes' : 'No'}</td>
               <td>{product.category}</td>
               <td>

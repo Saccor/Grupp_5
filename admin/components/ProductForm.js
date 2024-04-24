@@ -73,7 +73,7 @@ console.log(data);
       {isUploading && <Spinner />}
       <label>Description</label>
       <textarea placeholder="Description" value={description} onChange={e => setDescription(e.target.value)} />
-      <label>Price (in USD)</label>
+      <label>Price (in Kr)</label>
       <input type="number" placeholder="Price" value={price} onChange={e => setPrice(e.target.value)} />
       <label>In Stock</label>
       <input type="checkbox" checked={inStock} onChange={e => setInStock(e.target.checked)} />
