@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 
 const Payment = () => {
   const { state } = useLocation();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false);
 
   const [paymentDetails, setPaymentDetails] = useState({
@@ -18,16 +18,63 @@ const Payment = () => {
     lastName: "",
     email: "",
     address: "",
+    postalCode: "",
+    city: "",
   });
+
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setCustomerDetails({ ...customerDetails, [name]: value });
+  // };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    let formattedValue = value;
+
+    if (
+      ["firstName", "lastName", "city"].includes(name) &&
+      !/^[a-zA-Z\s]*$/.test(value)
+    ) {
+      return; // Only allow letters and spaces
+    }
+
+    if (name === "postalCode") {
+      formattedValue = value.replace(/[^\d]/g, "").slice(0, 5); // Only allow numbers and limit length to 5
+      setCustomerDetails({ ...customerDetails, [name]: formattedValue });
+      return;
+    }
+
     setCustomerDetails({ ...customerDetails, [name]: value });
   };
 
+  // const handlePaymentInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setPaymentDetails({ ...paymentDetails, [name]: value });
+  // };
+
   const handlePaymentInputChange = (e) => {
     const { name, value } = e.target;
-    setPaymentDetails({ ...paymentDetails, [name]: value });
+    let formattedValue = value;
+
+    if (name === "cardNumber" && (!/^\d*$/.test(value) || value.length > 16)) {
+      return; // Only allow up to 16 digits
+    }
+    if (name === "cvv" && (!/^\d*$/.test(value) || value.length > 3)) {
+      return; // Only allow up to 3 digits
+    }
+    if (name === "expiryDate") {
+      // Remove non-digits and limit length
+      formattedValue = value.replace(/[^\d]/g, "").slice(0, 4);
+      if (formattedValue.length >= 3) {
+        // Insert slash after MM (2 digits)
+        formattedValue =
+          formattedValue.slice(0, 2) + "/" + formattedValue.slice(2);
+      }
+      if (formattedValue.length > 5) {
+        return; // Prevent more input after MM/YY
+      }
+    }
+    setPaymentDetails({ ...paymentDetails, [name]: formattedValue });
   };
 
   const handleSubmit = async (e) => {
@@ -47,7 +94,7 @@ const Payment = () => {
         0
       );
 
-      const totalIncludingVAT = total * 1.12; // Assuming VAT is 12%
+      const totalIncludingVAT = total * 1.12;
 
       console.log("Order Items:", orderItems);
       console.log("Total:", total);
@@ -70,8 +117,7 @@ const Payment = () => {
       );
 
       console.log("Order created:", response.data);
-      setIsPaymentSuccessful(true); // Set the payment success state to true
-      // navigate("/order-confirmation");
+      setIsPaymentSuccessful(true);
     } catch (error) {
       console.error("Error creating order:", error);
     }
@@ -132,6 +178,26 @@ const Payment = () => {
               required
             />
           </label>
+          <label>
+            Postnummer:
+            <input
+              type="text"
+              name="postalCode"
+              value={customerDetails.postalCode}
+              onChange={handleInputChange}
+              required
+            />
+          </label>
+          <label>
+            Ort:
+            <input
+              type="text"
+              name="city"
+              value={customerDetails.city}
+              onChange={handleInputChange}
+              required
+            />
+          </label>
         </div>
 
         <div className="payment-section">
@@ -169,7 +235,21 @@ const Payment = () => {
           </label>
         </div>
 
-        <button type="submit" style={{ width: '100%', padding: '10px 20px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', marginTop: '20px' }}>Bekräfta köp</button>
+        <button
+          type="submit"
+          style={{
+            width: "100%",
+            padding: "10px 20px",
+            backgroundColor: "#007bff",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+            marginTop: "20px",
+          }}
+        >
+          Bekräfta köp
+        </button>
       </form>
     </div>
   );

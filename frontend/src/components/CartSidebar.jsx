@@ -20,9 +20,11 @@ const CartSidebar = () => {
         {cart.map((item) => (
           <CartItem key={item._id} item={item} />
         ))}
-        <div className="total-section">Moms (12%): {tax} Kr</div>
-        <div className="total-section bold">
-          Totalsumma: {totalPrice.toFixed(2)} Kr
+        <div className="total-section">
+          <div className="cart-moms">Moms (12%): {tax} Kr</div>
+          <div className="cart-totalsum">
+            Totalsumma: {totalPrice.toFixed(2)} Kr
+          </div>
         </div>
         <button
           onClick={() => navigate("/checkout")}

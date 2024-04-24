@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap"); */
 
 body {
   background-color: #fff;
@@ -23,9 +23,9 @@ body {
 
 .header h1 {
   margin: 0;
-  font-family: "Dancing Script", cursive;
+  font-family: "Lato", sans-serif;
   font-size: 4.5em;
-  color: #f5deb3;
+  color: #1b1b1a;
 }
 
 .productList {
@@ -36,7 +36,8 @@ body {
 /* Cart Sidebar Styles */
 .cart-sidebar {
   position: fixed;
-  right: -300px; /* Start offscreen */
+  height: 100%;
+  right: -300px;
   top: 0;
   width: 320px;
   max-height: 100vh;
@@ -47,12 +48,12 @@ body {
   display: flex;
   flex-direction: column;
   z-index: 1100;
-  transition: right 0.3s ease-in-out; /* Smooth transition for sidebar */
-  border-radius: 0 8px 8px 0; /* Rounded corners on the left side */
+  transition: right 0.3s ease-in-out;
+  border-radius: 0 8px 8px 0;
 }
 
 .cart-sidebar.open {
-  right: 0; /* Move into view */
+  right: 0;
 }
 
 .cartSidebar-title {
@@ -65,8 +66,8 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
-  z-index: 1050; /* Below the sidebar */
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1050;
   cursor: pointer;
 }
 
@@ -82,35 +83,35 @@ body {
   cursor: pointer;
   outline: none;
   transition: background-color 0.3s, transform 0.2s;
-  align-self: flex-end; /* Aligns the button to the right */
+  align-self: flex-end;
 }
 
 .close-button:hover {
   background-color: #555555;
-  transform: scale(1.05); /* Slightly enlarge the button on hover */
+  transform: scale(1.05);
 }
 
 .close-button:focus {
-  outline: none; /* Removes the focus outline to keep the design clean */
+  outline: none;
 }
 
 .checkout-button {
   font-family: "Lato", sans-serif;
   cursor: pointer;
-  padding: 8px 14px; /* Slightly smaller padding for a less bulky look */
+  padding: 8px 14px;
   margin-top: 20px;
-  background-color: #e60000; /* Bright red background */
-  color: #ffffff; /* White text */
+  background-color: #e60000;
+  color: #ffffff;
   border: none;
-  border-radius: 20px; /* Rounded edges */
-  transition: background-color 0.3s ease; /* Smooth transition for background color */
-  font-size: 16px; /* Appropriate text size */
-  font-weight: bold; /* Bold text */
-  outline: none; /* Remove focus outline for a cleaner look */
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
+  font-size: 16px;
+  font-weight: bold;
+  outline: none;
 }
 
 .checkout-button:hover {
-  background-color: #cc0000; /* Darker shade of red on hover */
+  background-color: #cc0000;
 }
 
 .total-section {
@@ -119,7 +120,7 @@ body {
   font-weight: light;
 }
 
-.total-section.bold {
+.cart-totalsum {
   font-family: "Lato", sans-serif;
   font-weight: bold;
 }
