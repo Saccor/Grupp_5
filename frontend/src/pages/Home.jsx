@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ProductList from "../components/ProductList.jsx";
 import CategoryFilter from "../components/CategoryFilter.jsx";
 import Header from "../components/Header.jsx";
+import Footer from "../components/Footer.jsx";
 
 const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -27,6 +28,9 @@ const Home = () => {
         <div style={{ flex: 1 }}>
           <ProductList className="productList" category={selectedCategory} />
         </div>
+      </div>
+      <div>
+        <Footer />
       </div>
     </>
   );
