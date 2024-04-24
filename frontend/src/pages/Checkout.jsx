@@ -11,6 +11,10 @@ const Checkout = () => {
     navigate("/payment", { state: { products: cart } });
   };
 
+  const handleContinueShopping = () => {
+    navigate("/");
+  };
+
   if (cart.length === 0) {
     return <p>Din varukorg är tom.</p>;
   }
@@ -78,6 +82,14 @@ const Checkout = () => {
           Totalt att betala: {totalPrice.toFixed(2)} Kr
         </p>
         <div style={{ textAlign: "center" }}>
+          <button
+            type="button"
+            onClick={handleContinueShopping}
+            className="checkout-confirm-button"
+            style={{ marginRight: "10px" }}
+          >
+            Fortsätt handla
+          </button>
           <button
             type="button"
             onClick={handlePurchase}
