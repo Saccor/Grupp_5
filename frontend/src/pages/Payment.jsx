@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useCart } from "../context/CartContext";
 
 const Payment = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false);
+  const { clearCart } = useCart();
 
   const [paymentDetails, setPaymentDetails] = useState({
     cardNumber: "",
@@ -70,22 +72,56 @@ const Payment = () => {
       );
 
       console.log("Order created:", response.data);
-      setIsPaymentSuccessful(true); // Set the payment success state to true
-      // navigate("/order-confirmation");
+      setIsPaymentSuccessful(true); 
+      clearCart();
     } catch (error) {
       console.error("Error creating order:", error);
     }
   };
 
   if (isPaymentSuccessful) {
+    const totalPrice = state.products.reduce(
+      (total, product) => total + product.price,
+      0
+    );
+  
     return (
-      <div className="confirmation-message">
-        <h2>Tack för ditt köp!</h2>
-        <h4>Vi skickar en orderbekräftelse till din e-post med ditt kvitto.</h4>
-        <h4>Din beställning kommer att levereras inom 3-5 arbetsdagar.</h4>
-      </div>
+      <>
+        <div className="confirmation-message">
+          <h2>Tack för ditt köp!</h2>
+          <h4>Vi skickar en orderbekräftelse till din e-post med ditt kvitto.</h4>
+          <h4>Din beställning kommer att levereras inom 3-5 arbetsdagar.</h4>
+        </div>
+        <div className="checkout-container">
+          <div className="checkout-box">
+            <h2 style={{ textAlign: "center" }}>Beställda produkter:</h2>
+            {state.products.map((product) => (
+              <div key={product.id} className="checkout-item">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="checkout-item-image"
+                />
+                <div className="checkout-item-details">
+                  <p className="item-name">{product.name}</p>
+                  <p className="item-price" style={{ marginLeft: "10px" }}>
+                    {product.price.toFixed(2)} Kr
+                  </p>
+                </div>
+              </div>
+            ))}
+            <div className="total-price">
+              <p style={{ textAlign: "center", fontWeight: "bold" }}>
+                Totalt pris: {totalPrice.toFixed(2)} Kr
+              </p>
+            </div>
+          </div>
+        </div>
+      </>
     );
   }
+  
+  
 
   return (
     <div className="payment-form">
