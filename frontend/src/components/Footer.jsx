@@ -13,7 +13,7 @@ const Footer = () => {
             <strong>Telefon: </strong>+46 70 123 45 67
           </p>
           <p>
-            <strong>Öppettider: </strong>Mon-Fri, 9:00 - 16:00
+            <strong>Öppettider: </strong>Mån-Fre, 9:00 - 16:00
           </p>
         </div>
         <div className="copyright">

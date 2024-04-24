@@ -14,8 +14,12 @@ export function Navbar() {
     <NavbarBs sticky="top" className="bg-white shadow-sm mb-3">
       <Container>
         <Nav className="me-auto" style={{ fontSize: "24px", color: "black" }}>
-          <Nav.Link as="a" href="/" style={{ cursor: 'pointer' }}>Hem</Nav.Link>
-          <Nav.Link as={NavLink} to="/checkout">Varukorg</Nav.Link>
+          <Nav.Link as="a" href="/" style={{ cursor: "pointer" }}>
+            Hakim Livs
+          </Nav.Link>
+          <Nav.Link as={NavLink} to="/checkout">
+            Varukorg
+          </Nav.Link>
         </Nav>
         <div style={{ flex: 1 }}></div>
         <div
