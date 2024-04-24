@@ -12,7 +12,7 @@ export function Navbar() {
   return (
     <NavbarBs sticky="top" className="bg-white shadow-sm mb-3">
       <Container>
-        <Nav className="me-auto">
+        <Nav className="me-auto" style={{ fontSize: "24px", color: "black" }}>
           <Nav.Link as={NavLink} to="/">
             Hem
           </Nav.Link>

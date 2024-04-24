@@ -240,7 +240,7 @@ const Payment = () => {
           style={{
             width: "100%",
             padding: "10px 20px",
-            backgroundColor: "#007bff",
+            backgroundColor: "#e60000",
             color: "white",
             border: "none",
             borderRadius: "5px",

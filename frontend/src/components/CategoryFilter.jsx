@@ -30,6 +30,7 @@ const CategoryFilter = ({ onCategorySelect }) => {
               background: "none",
               border: "none",
               cursor: "pointer",
+              fontSize: "20px",
             }}
           >
             {category}
