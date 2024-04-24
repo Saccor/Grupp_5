@@ -16,24 +16,8 @@ const CategoryFilter = ({ onCategorySelect }) => {
 
   return (
     <div>
-      <h4>Kategorier</h4>
-      <a
-        href="/"
-        style={{
-          display: "block",
-          width: "100%",
-          padding: "10px",
-          textAlign: "left",
-          color: "black",
-          background: "none",
-          border: "none",
-          cursor: "pointer",
-          fontSize: "20px",
-          textDecoration: "none",
-        }}
-      >
-        Alla kategorier
-      </a>
+      <h4 style={{ paddingLeft: "10px" }}>Kategorier</h4>
+
       <div>
         {categories.map((category, index) => (
           <button
@@ -54,6 +38,23 @@ const CategoryFilter = ({ onCategorySelect }) => {
           </button>
         ))}
       </div>
+      <a
+        href="/"
+        style={{
+          display: "block",
+          width: "100%",
+          padding: "10px",
+          textAlign: "left",
+          color: "black",
+          background: "none",
+          border: "none",
+          cursor: "pointer",
+          fontSize: "20px",
+          textDecoration: "none",
+        }}
+      >
+        Alla kategorier
+      </a>
     </div>
   );
 };

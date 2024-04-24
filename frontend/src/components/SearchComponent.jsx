@@ -15,7 +15,12 @@ const SearchComponent = ({ onSearch }) => {
       placeholder="Sök..."
       value={searchTerm}
       onChange={handleSearchChange}
-      style={{ width: "100%", padding: "10px", marginBottom: "20px" }}
+      style={{
+        width: "100%",
+        padding: "10px",
+        border: "0.1em solid",
+        borderRadius: "15px",
+      }}
     />
   );
 };

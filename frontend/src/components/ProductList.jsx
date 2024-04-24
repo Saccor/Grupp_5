@@ -39,9 +39,10 @@ const ProductList = ({ category }) => {
   };
 
   const filteredProducts = searchTerm
-    ? allProducts.filter((product) =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.description.toLowerCase().includes(searchTerm.toLowerCase())
+    ? allProducts.filter(
+        (product) =>
+          product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          product.description.toLowerCase().includes(searchTerm.toLowerCase())
       )
     : category
     ? allProducts.filter((product) => product.category === category)

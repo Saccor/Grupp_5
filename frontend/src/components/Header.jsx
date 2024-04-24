@@ -6,7 +6,6 @@ const images = [
   "/image2.png",
   "/image3.png",
   "/image4.png",
-  "/image5.webp",
   "/image6.webp",
   "/image7.webp",
 ];

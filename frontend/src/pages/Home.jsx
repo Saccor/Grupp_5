@@ -6,9 +6,11 @@ import Footer from "../components/Footer.jsx";
 
 const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [animationKey, setAnimationKey] = useState(0);
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
+    setAnimationKey((prevKey) => prevKey + 1);
   };
 
   return (
@@ -26,12 +28,15 @@ const Home = () => {
           <CategoryFilter onCategorySelect={handleCategorySelect} />
         </div>
         <div style={{ flex: 1 }}>
+          {selectedCategory && (
+            <div key={animationKey} className="category-title">
+              {selectedCategory}
+            </div>
+          )}
           <ProductList className="productList" category={selectedCategory} />
         </div>
       </div>
-      <div>
-        <Footer />
-      </div>
+      <Footer />
     </>
   );
 };
