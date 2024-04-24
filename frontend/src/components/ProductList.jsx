@@ -38,17 +38,14 @@ const ProductList = ({ category }) => {
     setSelectedProduct(null);
   };
 
-  const filteredProducts = allProducts.filter((product) => {
-    const productMatchesCategory = category
-      ? product.category === category
-      : true;
-    return (
-      productMatchesCategory &&
-      (product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        product.description.toLowerCase().includes(searchTerm.toLowerCase()))
-    );
-  });
+  const filteredProducts = searchTerm
+    ? allProducts.filter((product) =>
+        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.description.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : category
+    ? allProducts.filter((product) => product.category === category)
+    : allProducts;
 
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
