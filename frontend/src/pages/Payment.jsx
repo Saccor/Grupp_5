@@ -136,7 +136,7 @@ const Payment = () => {
       <>
         <div className="confirmation-message">
           <h2>Tack för ditt köp!</h2>
-          <h4>Du kan plocka upp din order inom 2 timmar på St:eriksgatan 33.</h4>
+          <h4>Du kan plocka upp din order inom 2 timmar på Tomtebodavägen 3A, 171 65 Solna.</h4>
         </div>
         <div className="checkout-container">
           <div className="checkout-box">
