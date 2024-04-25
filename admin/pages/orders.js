@@ -1,7 +1,8 @@
 import Layout from '@/components/Layout';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import EditOrderModal from '@/components/EditOrderModal'; // Ensure this path is accurate
+import EditOrderModal from '@/components/EditOrderModal';
+import styles from '@/styles/Orders.module.css'; // Ensure this import path matches your project structure
 
 export default function OrdersPage() {
   const [orders, setOrders] = useState([]);
@@ -53,7 +54,7 @@ export default function OrdersPage() {
   return (
     <Layout>
       <h1>Orders</h1>
-      <table className="basic">
+      <table className={styles.ordersTable}>
         <thead>
           <tr>
             <th>Date</th>
@@ -66,9 +67,9 @@ export default function OrdersPage() {
         <tbody>
           {orders.length > 0 ? orders.map(order => (
             <tr key={order._id}>
-              <td>{new Date(order.createdAt).toLocaleString()}</td>
-              <td className={order.paid ? 'text-green-600' : 'text-red-600'}>
-                {order.paid ? 'YES' : 'NO'}
+              <td data-label="Date">{new Date(order.createdAt).toLocaleString()}</td>
+              <td data-label="Paid" className={order.paid ? styles.textGreen600 : styles.textRed600}>
+              {order.paid ? 'YES' : 'NO'}
               </td>
               <td>
                 {order.customer.firstName} {order.customer.lastName}<br />
@@ -83,13 +84,16 @@ export default function OrdersPage() {
                 ))}
               </td>
               <td>
-                <button onClick={() => handlePaymentStatusChange(order._id, order.paid)}>
+                <button
+                  className={order.paid ? styles.markAsUnpaidButton : styles.markAsPaidButton}
+                  onClick={() => handlePaymentStatusChange(order._id, order.paid)}
+                >
                   Mark as {order.paid ? 'Unpaid' : 'Paid'}
                 </button>
-                <button onClick={() => openEditModal(order)}>
+                <button className={styles.editButton} onClick={() => openEditModal(order)}>
                   Edit
                 </button>
-                <button onClick={() => handleDeleteOrder(order._id)}>
+                <button className={styles.deleteButton} onClick={() => handleDeleteOrder(order._id)}>
                   Delete
                 </button>
               </td>
