@@ -35,10 +35,11 @@ const Payment = () => {
 
     if (
       ["firstName", "lastName", "city"].includes(name) &&
-      !/^[a-zA-Z\s]*$/.test(value)
+      !/^[a-zA-Z\såäöÅÄÖ]*$/.test(value)
     ) {
-      return; // Only allow letters and spaces
+      return; // Only allow letters, spaces, and specific additional characters (å, ä, ö)
     }
+    
 
     if (name === "postalCode") {
       formattedValue = value.replace(/[^\d]/g, "").slice(0, 5); // Only allow numbers and limit length to 5
