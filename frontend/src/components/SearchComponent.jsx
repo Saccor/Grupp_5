@@ -40,7 +40,7 @@ const SearchComponent = ({ onSearch, hasResults }) => {
             color: 'red',
           }}
         >
-          Ingen sökträff
+          Inga sökresultat hittades
         </div>
       )}
     </div>
