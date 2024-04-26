@@ -59,6 +59,11 @@ export default function ProductForm({
     }
   };
 
+  const handleCancel = () => {
+    router.push('/products');
+  };
+
+
   if (goToProducts) {
     router.push('/products');
   }
@@ -89,6 +94,7 @@ export default function ProductForm({
       <input className={styles.input} type="text" name="category" placeholder="Category" value={formState.category} onChange={handleChange} />
       
       <button type="submit" className={styles.saveButton}>Save</button>
+      <button type="button" className={styles.cancelButton} onClick={handleCancel}>Cancel</button>
     </form>
   );
 }

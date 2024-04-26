@@ -1,5 +1,4 @@
 import '@/styles/globals.css';
-import '../styles/orders.module.css';
 import { SessionProvider } from "next-auth/react";
 
 

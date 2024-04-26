@@ -1,0 +1,93 @@
+/* admin/styles/Orders.module.css */
+
+.ordersTable {
+    @apply w-full bg-white rounded-sm shadow-md overflow-auto;
+  }
+  
+  .ordersTable thead {
+    @apply bg-gray-200;
+  }
+  
+  .ordersTable thead tr th {
+    @apply text-sm text-gray-600 uppercase border-b border-gray-200 px-4 py-2;
+  }
+  
+  .ordersTable tbody tr td {
+    @apply px-4 py-2 text-sm;
+  }
+  
+  .ordersTable tbody tr:nth-child(odd) {
+    @apply bg-gray-50;
+  }
+  
+  .ordersTable tbody tr:hover {
+    @apply bg-gray-100;
+  }
+  
+  .textGreen600 {
+    @apply text-green-600 font-bold;
+  }
+  
+  .textRed600 {
+    @apply text-red-600 font-bold;
+  }
+  
+  .editButton {
+    @apply bg-blue-500 hover:bg-blue-700 text-white text-xs py-1 px-2 rounded;
+  }
+  
+  .deleteButton {
+    @apply bg-red-500 hover:bg-red-700 text-white text-xs py-1 px-2 rounded;
+  }
+  
+  .markAsPaidButton {
+    @apply bg-green-500 hover:bg-green-700 text-white text-xs py-1 px-2 rounded;
+  }
+  
+  .markAsUnpaidButton {
+    @apply bg-yellow-500 hover:bg-yellow-700 text-white text-xs py-1 px-2 rounded;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .ordersTable thead tr th, .ordersTable tbody tr td {
+      @apply px-2 py-1 text-xs;
+    }
+  
+    .ordersButton {
+      @apply text-xs py-1 px-2;
+    }
+  
+    /* Optionally hide less important columns */
+    .ordersTable .optional {
+      @apply hidden;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .ordersTable, .ordersTable thead, .ordersTable tbody, .ordersTable th, .ordersTable tr, .ordersTable td {
+      @apply block;
+    }
+  
+    .ordersTable thead tr {
+      @apply hidden;
+    }
+  
+    .ordersTable tr {
+      @apply mb-4 shadow-lg;
+    }
+  
+    .ordersTable td {
+      @apply text-xs mb-2 px-4 py-2;
+      /* Each cell acts like a row */
+    }
+  
+    .ordersTable td:before {
+      /* Use pseudo-elements to add labels */
+      content: attr(data-label);
+      @apply font-medium inline-block mb-1;
+    }
+  }
+  
+  
+  

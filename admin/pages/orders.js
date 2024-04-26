@@ -2,12 +2,13 @@ import Layout from '@/components/Layout';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import EditOrderModal from '@/components/EditOrderModal';
-import styles from '@/styles/Orders.module.css'; // Ensure this import path matches your project structure
+import styles from './orders.module.css';
 
 export default function OrdersPage() {
   const [orders, setOrders] = useState([]);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [selectedPrintOrders, setSelectedPrintOrders] = useState({});
 
   useEffect(() => {
     axios.get('/api/orders').then(response => {
@@ -51,12 +52,22 @@ export default function OrdersPage() {
       });
   };
 
+  const togglePrintSelection = (orderId) => {
+    setSelectedPrintOrders(prev => ({
+      ...prev,
+      [orderId]: !prev[orderId]
+    }));
+  };
+
   return (
     <Layout>
       <h1>Orders</h1>
+      <button onClick={() => window.print()} className={styles.printButton}>Print Selected Orders</button>
       <table className={styles.ordersTable}>
         <thead>
           <tr>
+            <th>Select</th>
+            <th>Order ID</th>
             <th>Date</th>
             <th>Paid</th>
             <th>Recipient</th>
@@ -67,23 +78,25 @@ export default function OrdersPage() {
         <tbody>
           {orders.length > 0 ? orders.map(order => (
             <tr key={order._id}>
+              <td><input type="checkbox" checked={!!selectedPrintOrders[order._id]} onChange={() => togglePrintSelection(order._id)} /></td>
+              <td data-label="Order ID">{order._id}</td>
               <td data-label="Date">{new Date(order.createdAt).toLocaleString()}</td>
               <td data-label="Paid" className={order.paid ? styles.textGreen600 : styles.textRed600}>
-              {order.paid ? 'YES' : 'NO'}
+                {order.paid ? 'YES' : 'NO'}
               </td>
-              <td>
+              <td data-label="Recipient">
                 {order.customer.firstName} {order.customer.lastName}<br />
                 {order.customer.email}<br />
                 {order.customer.address}
               </td>
-              <td>
+              <td data-label="Products">
                 {order.orderItems.map(item => (
                   <div key={item._id}>
                     {item.product} x {item.quantity}<br />
                   </div>
                 ))}
               </td>
-              <td>
+              <td data-label="Actions">
                 <button
                   className={order.paid ? styles.markAsUnpaidButton : styles.markAsPaidButton}
                   onClick={() => handlePaymentStatusChange(order._id, order.paid)}
@@ -98,7 +111,7 @@ export default function OrdersPage() {
                 </button>
               </td>
             </tr>
-          )) : <tr><td colSpan="5">No orders found</td></tr>}
+          )) : <tr><td colSpan="7">No orders found</td></tr>}
         </tbody>
       </table>
       {isEditModalOpen && (
