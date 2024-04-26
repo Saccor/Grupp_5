@@ -1,6 +1,6 @@
 // App.js
 import React, { useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
 import { Navbar } from "./components/Navbar.jsx";
@@ -12,6 +12,9 @@ import { SearchContext } from "./context/SearchContext.jsx";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
+  const location = useLocation();
+
+  const showCartSidebar = !["/checkout", "/payment"].includes(location.pathname);
 
   return (
     <SearchContext.Provider value={{ searchTerm, setSearchTerm }}>
@@ -23,7 +26,7 @@ function App() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/payment" element={<Payment />} />
           </Routes>
-          <CartSidebar />
+          {showCartSidebar && <CartSidebar />}
         </div>
       </CartProvider>
     </SearchContext.Provider>
