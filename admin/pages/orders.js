@@ -1,5 +1,7 @@
+// admin\pages\orders.js
+
+import React, { useState, useEffect } from 'react';
 import Layout from '@/components/Layout';
-import { useEffect, useState } from 'react';
 import axios from 'axios';
 import EditOrderModal from '@/components/EditOrderModal';
 import styles from './orders.module.css';
@@ -9,6 +11,8 @@ export default function OrdersPage() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [selectedPrintOrders, setSelectedPrintOrders] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const [ordersPerPage] = useState(10); // Number of orders per page
 
   useEffect(() => {
     axios.get('/api/orders').then(response => {
@@ -59,10 +63,18 @@ export default function OrdersPage() {
     }));
   };
 
+  // Calculate pagination range
+  const indexOfLastOrder = currentPage * ordersPerPage;
+  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+  const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
+
+  // Change page
+  const paginate = pageNumber => setCurrentPage(pageNumber);
+
   return (
     <Layout>
       <h1>Orders</h1>
-      <button onClick={() => window.print()} className={styles.printButton}>Print Selected Orders</button>
+      <button onClick={() => window.print()} className={styles.printButton}>Print Orders</button>
       <table className={styles.ordersTable}>
         <thead>
           <tr>
@@ -76,7 +88,7 @@ export default function OrdersPage() {
           </tr>
         </thead>
         <tbody>
-          {orders.length > 0 ? orders.map(order => (
+          {currentOrders.map(order => (
             <tr key={order._id}>
               <td><input type="checkbox" checked={!!selectedPrintOrders[order._id]} onChange={() => togglePrintSelection(order._id)} /></td>
               <td data-label="Order ID">{order._id}</td>
@@ -111,7 +123,7 @@ export default function OrdersPage() {
                 </button>
               </td>
             </tr>
-          )) : <tr><td colSpan="7">No orders found</td></tr>}
+          ))}
         </tbody>
       </table>
       {isEditModalOpen && (
@@ -121,6 +133,14 @@ export default function OrdersPage() {
           handleOrderUpdate={handleOrderUpdate}
         />
       )}
+      {/* Pagination */}
+      <div className={styles.pagination}>
+        {Array.from({ length: Math.ceil(orders.length / ordersPerPage) }, (_, i) => (
+          <button key={i + 1} onClick={() => paginate(i + 1)} className={currentPage === i + 1 ? styles.active : ''}>
+            {i + 1}
+          </button>
+        ))}
+      </div>
     </Layout>
   );
 }

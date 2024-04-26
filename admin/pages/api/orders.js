@@ -8,6 +8,9 @@ export default async function handler(req, res) {
   switch (req.method) {
     case 'GET':
       try {
+        const page = parseInt(req.query.page) || 1; // Default to page 1 if no page is specified
+        const perPage = 10; // Number of orders per page
+        const skip = (page - 1) * perPage;
         const orders = await Order.find().sort({ createdAt: -1 });
         res.status(200).json(orders);
       } catch (error) {
