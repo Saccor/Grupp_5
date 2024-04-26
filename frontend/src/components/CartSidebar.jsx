@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import CartItem from "./CartItem";
 import "../styles.css";
+import { formatPrice } from "../utilities/formatPrice";
 
 const CartSidebar = () => {
   const { cart, isCartOpen, toggleCart, tax, totalPrice } = useCart();
@@ -21,9 +22,9 @@ const CartSidebar = () => {
           <CartItem key={item._id} item={item} />
         ))}
         <div className="total-section">
-          <div className="cart-moms">Moms (12%): {tax} Kr</div>
+          <div className="cart-moms">Moms (12%): {formatPrice(tax)}</div>
           <div className="cart-totalsum">
-            Totalsumma: {totalPrice.toFixed(2)} Kr
+            Totalsumma: {formatPrice(totalPrice)}
           </div>
         </div>
         <button

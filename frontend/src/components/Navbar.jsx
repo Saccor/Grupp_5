@@ -12,7 +12,9 @@ export function Navbar() {
   const location = useLocation();
 
   const isCheckoutOrPaymentPage = () => {
-    return location.pathname === "/checkout" || location.pathname === "/payment";
+    return (
+      location.pathname === "/checkout" || location.pathname === "/payment"
+    );
   };
 
   return (
@@ -22,15 +24,23 @@ export function Navbar() {
           <Nav.Link as="a" href="/" style={{ cursor: "pointer" }}>
             Hakim Livs
           </Nav.Link>
-          {!isCheckoutOrPaymentPage() && ( // Conditionally render Varukorg link
+          {!isCheckoutOrPaymentPage() && (
             <Nav.Link as={NavLink} to="/checkout">
-            Varukorg
-          </Nav.Link>
-           )}
+              Varukorg
+            </Nav.Link>
+          )}
         </Nav>
         <div style={{ flex: 1 }}></div>
-        {!isCheckoutOrPaymentPage() && ( // Conditionally render SearchComponent
-          <div style={{ width: "500px", flex: 1, display: "flex", justifyContent: "center", marginTop: "5px" }}>
+        {!isCheckoutOrPaymentPage() && (
+          <div
+            style={{
+              width: "500px",
+              flex: 1,
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "5px",
+            }}
+          >
             <SearchComponent onSearch={setSearchTerm} searchTerm={searchTerm} />
           </div>
         )}

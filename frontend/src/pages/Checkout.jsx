@@ -1,6 +1,7 @@
 import React from "react";
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
+import { formatPrice } from "../utilities/formatPrice";
 
 const Checkout = () => {
   const { cart, totalPrice, tax, updateQuantity, removeFromCart } = useCart();
@@ -35,7 +36,7 @@ const Checkout = () => {
                 <p className="item-name" style={{ margin: "0" }}>
                   {item.name}
                 </p>
-                <p style={{ margin: "0" }}>{item.price.toFixed(2)} Kr</p>
+                <p style={{ margin: "0" }}>{formatPrice(item.price)}</p>
               </div>
             </div>
             <div className="quantity-container">
@@ -70,16 +71,16 @@ const Checkout = () => {
                 </svg>
               </button>
               <p className="item-price">
-                {(item.quantity * item.price).toFixed(2)} Kr
+                {formatPrice(item.quantity * item.price)}
               </p>
             </div>
           </div>
         ))}
         <p style={{ textAlign: "center", marginTop: "20px" }}>
-          Moms (12%): {tax} Kr
+          Moms (12%): {formatPrice(tax)}
         </p>
         <p style={{ textAlign: "center", fontWeight: "bold" }}>
-          Totalt att betala: {totalPrice.toFixed(2)} Kr
+          Totalt att betala: {formatPrice(totalPrice)}
         </p>
         <div style={{ textAlign: "center" }}>
           <button

@@ -57,6 +57,13 @@ const ProductList = ({ category }) => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  const formatPrice = (price) => {
+    return price.toLocaleString("sv-SE", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  };
+
   return (
     <div>
       <div className="product-grid-container">
@@ -87,7 +94,7 @@ const ProductList = ({ category }) => {
             <h3>{product.name}</h3>
             <p>{product.description}</p>
             <p>Kategori: {product.category}</p>
-            <p>Pris: {product.price} Kr</p>
+            <p>Pris: {formatPrice(product.price)} kr</p>
             <button
               onClick={(e) => {
                 e.stopPropagation();

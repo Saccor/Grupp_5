@@ -1,5 +1,6 @@
 import React from "react";
 import { useCart } from "../context/CartContext.jsx";
+import { formatPrice } from "../utilities/formatPrice";
 
 const CartItem = ({ item }) => {
   const { updateQuantity, removeFromCart } = useCart();
@@ -25,7 +26,7 @@ const CartItem = ({ item }) => {
       <div className="cart-item-details">
         <h5>{item.name}</h5>
         <div className="cart-item-info">
-          <p>{item.price} Kr</p>
+          <p>{formatPrice(item.price)}</p>
           <div>
             <button
               onClick={() => updateQuantity(item._id, item.quantity - 1)}
@@ -43,7 +44,7 @@ const CartItem = ({ item }) => {
             </button>
           </div>
           <p className="total-price">
-            {(item.quantity * parseFloat(item.price)).toFixed(2)} Kr
+            {formatPrice(item.quantity * parseFloat(item.price))}
           </p>
         </div>
       </div>

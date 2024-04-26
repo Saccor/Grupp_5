@@ -1,4 +1,5 @@
 import React from "react";
+import { formatPrice } from "../utilities/formatPrice";
 
 const ProductDetailModal = ({ product, onClose, addToCart }) => {
   if (!product) return null;
@@ -57,7 +58,7 @@ const ProductDetailModal = ({ product, onClose, addToCart }) => {
           <h3>{product.name}</h3>
           <p>{product.description}</p>
           <p>Kategori: {product.category}</p>
-          <p>Pris: {product.price} Kr</p>
+          <p>Pris: {formatPrice(product.price)} kr</p>
           <button
             onClick={() => {
               onClose();

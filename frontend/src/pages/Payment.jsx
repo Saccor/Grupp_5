@@ -5,7 +5,7 @@ import { useCart } from "../context/CartContext";
 
 const Payment = () => {
   const { state } = useLocation();
-  // const navigate = useNavigate();
+
   const [isPaymentSuccessful, setIsPaymentSuccessful] = useState(false);
   const { clearCart } = useCart();
 
@@ -24,11 +24,6 @@ const Payment = () => {
     city: "",
   });
 
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setCustomerDetails({ ...customerDetails, [name]: value });
-  // };
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     let formattedValue = value;
@@ -37,12 +32,11 @@ const Payment = () => {
       ["firstName", "lastName", "city"].includes(name) &&
       !/^[a-zA-Z\såäöÅÄÖ]*$/.test(value)
     ) {
-      return; // Only allow letters, spaces, and specific additional characters (å, ä, ö)
+      return;
     }
-    
 
     if (name === "postalCode") {
-      formattedValue = value.replace(/[^\d]/g, "").slice(0, 5); // Only allow numbers and limit length to 5
+      formattedValue = value.replace(/[^\d]/g, "").slice(0, 5);
       setCustomerDetails({ ...customerDetails, [name]: formattedValue });
       return;
     }
@@ -50,31 +44,24 @@ const Payment = () => {
     setCustomerDetails({ ...customerDetails, [name]: value });
   };
 
-  // const handlePaymentInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setPaymentDetails({ ...paymentDetails, [name]: value });
-  // };
-
   const handlePaymentInputChange = (e) => {
     const { name, value } = e.target;
     let formattedValue = value;
 
     if (name === "cardNumber" && (!/^\d*$/.test(value) || value.length > 16)) {
-      return; // Only allow up to 16 digits
+      return;
     }
     if (name === "cvv" && (!/^\d*$/.test(value) || value.length > 3)) {
-      return; // Only allow up to 3 digits
+      return;
     }
     if (name === "expiryDate") {
-      // Remove non-digits and limit length
       formattedValue = value.replace(/[^\d]/g, "").slice(0, 4);
       if (formattedValue.length >= 3) {
-        // Insert slash after MM (2 digits)
         formattedValue =
           formattedValue.slice(0, 2) + "/" + formattedValue.slice(2);
       }
       if (formattedValue.length > 5) {
-        return; // Prevent more input after MM/YY
+        return;
       }
     }
     setPaymentDetails({ ...paymentDetails, [name]: formattedValue });
@@ -120,7 +107,7 @@ const Payment = () => {
       );
 
       console.log("Order created:", response.data);
-      setIsPaymentSuccessful(true); 
+      setIsPaymentSuccessful(true);
       clearCart();
     } catch (error) {
       console.error("Error creating order:", error);
@@ -132,12 +119,15 @@ const Payment = () => {
       (total, product) => total + product.price,
       0
     );
-  
+
     return (
       <>
         <div className="confirmation-message">
           <h2>Tack för ditt köp!</h2>
-          <h4>Du kan plocka upp din order inom 2 timmar på Tomtebodavägen 3A, 171 65 Solna.</h4>
+          <h4>
+            Du kan plocka upp din order inom 2 timmar på Tomtebodavägen 3A, 171
+            65 Solna.
+          </h4>
         </div>
         <div className="checkout-container">
           <div className="checkout-box">
@@ -152,14 +142,14 @@ const Payment = () => {
                 <div className="checkout-item-details">
                   <p className="item-name">{product.name}</p>
                   <p className="item-price" style={{ marginLeft: "10px" }}>
-                    {product.price.toFixed(2)} Kr
+                    {product.price.toFixed(2)} kr
                   </p>
                 </div>
               </div>
             ))}
             <div className="total-price">
               <p style={{ textAlign: "center", fontWeight: "bold" }}>
-                Totalt pris: {totalPrice.toFixed(2)} Kr
+                Totalt pris: {totalPrice.toFixed(2)} kr
               </p>
             </div>
           </div>
@@ -167,8 +157,6 @@ const Payment = () => {
       </>
     );
   }
-  
-  
 
   return (
     <div className="payment-form">
