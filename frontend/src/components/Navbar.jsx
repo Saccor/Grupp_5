@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Button, Container, Nav, Navbar as NavbarBs } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import SearchComponent from "./SearchComponent.jsx";
 import { SearchContext } from "../context/SearchContext.jsx";
@@ -9,6 +9,11 @@ export function Navbar() {
   const { searchTerm, setSearchTerm } = useContext(SearchContext);
   const { toggleCart, cart } = useCart();
   const cartQuantity = cart.reduce((count, item) => count + item.quantity, 0);
+  const location = useLocation();
+
+  const isCheckoutOrPaymentPage = () => {
+    return location.pathname === "/checkout" || location.pathname === "/payment";
+  };
 
   return (
     <NavbarBs sticky="top" className="bg-white shadow-sm mb-3">
@@ -17,22 +22,18 @@ export function Navbar() {
           <Nav.Link as="a" href="/" style={{ cursor: "pointer" }}>
             Hakim Livs
           </Nav.Link>
-          <Nav.Link as={NavLink} to="/checkout">
+          {!isCheckoutOrPaymentPage() && ( // Conditionally render Varukorg link
+            <Nav.Link as={NavLink} to="/checkout">
             Varukorg
           </Nav.Link>
+           )}
         </Nav>
         <div style={{ flex: 1 }}></div>
-        <div
-          style={{
-            width: "500px",
-            flex: 1,
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "5px",
-          }}
-        >
-          <SearchComponent onSearch={setSearchTerm} searchTerm={searchTerm} />
-        </div>
+        {!isCheckoutOrPaymentPage() && ( // Conditionally render SearchComponent
+          <div style={{ width: "500px", flex: 1, display: "flex", justifyContent: "center", marginTop: "5px" }}>
+            <SearchComponent onSearch={setSearchTerm} searchTerm={searchTerm} />
+          </div>
+        )}
         <div style={{ flex: 1 }}></div>
         <Button
           onClick={toggleCart}

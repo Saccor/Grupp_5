@@ -12,11 +12,12 @@ import { SearchContext } from "./context/SearchContext.jsx";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
+
   return (
     <SearchContext.Provider value={{ searchTerm, setSearchTerm }}>
       <CartProvider>
+        <Navbar />
         <div style={{ minHeight: "100vh" }}>
-          <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/checkout" element={<Checkout />} />
