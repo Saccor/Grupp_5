@@ -58,7 +58,7 @@ const ProductDetailModal = ({ product, onClose, addToCart }) => {
           <h3>{product.name}</h3>
           <p>{product.description}</p>
           <p>Kategori: {product.category}</p>
-          <p>Pris: {formatPrice(product.price)} kr</p>
+          <p>Pris: {formatPrice(product.price)} </p>
           <button
             onClick={() => {
               onClose();

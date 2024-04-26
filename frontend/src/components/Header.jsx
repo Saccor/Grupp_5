@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import "../styles.css";
 
 const images = [
+  "/image9.webp",
   "/image1.webp",
   "/image2.png",
   "/image3.png",
-  "/image4.png",
   "/image6.webp",
   "/image7.webp",
 ];
@@ -24,12 +24,18 @@ const Header = () => {
 
   return (
     <div className="container">
-      <header className="header">
-        <img
-          src={images[index]}
-          alt={`Slide ${index + 1}`}
-          className="header-image"
-        />
+      <header>
+        <div className="slideshow">
+          <img
+            src={images[index]}
+            alt={`Slide ${index + 1}`}
+            className="header-image"
+          />
+        </div>
+        <div>
+          {/* <img src="image9.webp" alt="Logo" className="logo-image" /> */}
+          <h1 className="header">Upptäck Vårt Sortiment!</h1>
+        </div>
       </header>
     </div>
   );
